@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-class StartScreen extends Component {
+export default class StartScreen extends Component {
   
   constructor() {
     super();
