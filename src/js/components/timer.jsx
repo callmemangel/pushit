@@ -8,7 +8,7 @@ export default class Timer extends Component {
       interval: null
     }
 
-    this.startTimer = this.startTimer.bind(this);
+    this.doStep = this.doStep.bind(this);
   }
   
   doStep() {
@@ -17,18 +17,18 @@ export default class Timer extends Component {
       this.setState({ interval: null });
       return;
     }
-    this.setState({ seconds: --seconds });
+    this.setState({ seconds: --this.state.seconds });
   }
 
   componentDidMount() {
-    this.setState({ interval: setInterval(doStep, 1000) });
+    this.setState({ interval: setInterval(this.doStep, 1000) });
   }
 
   render() {
     if (!this.state.seconds) return null;
 
     return(
-      <div className='timer'>{this.state.seconds}</div> 
+      <p className='timer'>{this.state.seconds}</p> 
     )
   }
 }

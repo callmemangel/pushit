@@ -1,10 +1,11 @@
-import Player from './playerObj.js';
+let Player = require('./Player.js');
 
-function setup(ws) {
+var setup = function(ws, game, customColor = null) {
 
-  var player = new Player(ws);
+  var player = new Player(ws, game, customColor);
 
   ws.on('message', signal => {
+    console.log(signal); 
     switch(signal) {
 
     case 'MOVE_UP':
@@ -23,11 +24,15 @@ function setup(ws) {
     case 'MOVE_END': 
       player.stopMove();
       break;
-    }
 
     case 'PUSH':
-      player.push();
+      player.push(1);
+      break;
 
+    case 'DISCONNECT':
+      player.delFromGame();
+      break;
+    }
   });
 
   ws.on('error', event => {
@@ -35,10 +40,10 @@ function setup(ws) {
   });
 
   ws.on('close', event => {
-    deletePlayer(player); 
+    player.delFromGame(); 
   });
     
   return player;
 }
 
-export default setup;
+module.exports = setup;

@@ -1,12 +1,13 @@
 const path = require('path');
 
+
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
 
     entry: {
-        game: './src/js/game.js',
-        controls: './src/js/controls.js'
+        game: './src/js/game.jsx',
+        controls: './src/js/controls.jsx'
     },
 
     output: {
@@ -16,7 +17,7 @@ module.exports = {
     },
 
     plugins: [
-        new ExtractTextPlugin('style.css') 
+        new ExtractTextPlugin('[name].css') 
     ],
     
     devServer: {
