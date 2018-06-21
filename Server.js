@@ -37,9 +37,10 @@ games.setOnFree = function(game) {
     if (!games[i]) {
       game.id = i;
       games[i] = game;
-      return;
+      return i;
     }
   } 
+  return null;
 }
 
 function getReqCode(req) {
@@ -104,11 +105,13 @@ playerMasterWs.on('connection', (ws, req) => {
   player.addToGame();
   player.setInitialCoords();
   player.setInitialColor();
-
+  
   game.sendPlayer(player);
 
   let playerMaster = new PlayerMaster(player); 
   playerMaster.configurate(ws);
+
+  player.sendColor();
 });
 
 app.get('/', (req, res) => {
@@ -124,7 +127,7 @@ app.post('/generate', (req, res) => {
   let mode = req.body.mode;
   let type = 'local';
 
-  let game = new Game(code, mode, type);
+  let game = new Game(code, mode, type, games);
 
   games.setOnFree(game); 
 

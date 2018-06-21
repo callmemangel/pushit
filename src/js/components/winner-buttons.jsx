@@ -4,11 +4,11 @@ import WinnerCounter from './winner-counter.jsx';
 export default class WinnerButtons extends Component {
   
   handlePlayAgain() {
-  
+    window.ee.emit('PLAY_AGAIN'); 
   }
 
   handleNewGame() {
-  
+    window.ee.emit('NEW_GAME'); 
   }
 
   render() {

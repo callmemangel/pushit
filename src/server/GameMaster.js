@@ -26,6 +26,7 @@ function GameMaster(game) {
     });
 
     ws.on('close', event => {
+      ws.isClosed = true;
       this.game.del();
     }); 
   }

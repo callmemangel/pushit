@@ -7,7 +7,6 @@ function setupWebSocket(code, gameMode) {
     }
 
     ws.onopen = function() {
-      alert('Game WebSocket connected'); 
     }
 
     ws.onerror = function(e) {
@@ -16,7 +15,7 @@ function setupWebSocket(code, gameMode) {
 
     ws.onmessage = event => {
       let msg = JSON.parse(event.data);
-      
+
       switch (msg.type) {
         case 'test': 
           alert('test message from server');
@@ -25,11 +24,15 @@ function setupWebSocket(code, gameMode) {
           switch(msg.code) {
           case 404:
             //do err 
-            ws.close()
+            ws.close();
             break;
           }
+          case 405:
+            //do err 
+            ws.close();
+            break;
           break;
-        case 'COORDS':
+        case 'C':
           this.setCoords(msg.coords);
           break;
         case 'GAME_READY':
@@ -41,11 +44,34 @@ function setupWebSocket(code, gameMode) {
         case 'NEW_GAME':
           this.setState({ mode: 'start' });
           break;
+        case 'GAME_DELETE':
+          this.setState({ mode: 'start' });
+          ws.close();
+          break;
+        case 'PLAY_AGAIN':
+          window.ee.emit('GAME_START');
+          break;
         case 'ADD_PLAYER':
           let players = this.state.players;
-          players.push(msg.player);
-          console.log(msg.player);
+          players[msg.player.id] = msg.player;
           this.setState({ players: players });
+          break;
+        case 'DELETE_PLAYER':
+          let plrss = this.state.players;
+
+          delete plrss[msg.id];
+          this.setState({ players: plrss });
+          console.log('player deleted ' + msg.id);
+          break;
+        case 'KILL_PLAYER':
+          let plrs = this.state.players;
+
+          prls[msg.id].x = 9999;
+          plrs[msg.id].y = 9999;
+
+          this.setState({ players: plrs });
+          console.log('player killed ' + msg.id);
+ 
           break;
       }
     }

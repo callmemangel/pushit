@@ -18,12 +18,12 @@ export default class Field extends Component {
 
   render() {
     let players = this.state.players.map((player, index) => {
+      if (!player) return null;
+
       return (
         <Player key={index} player={player}/>
       ) 
     });
-
-    console.log(players);
 
     return (
      <div className='game-field'>

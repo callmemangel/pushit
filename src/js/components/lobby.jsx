@@ -78,7 +78,6 @@ export default class Lobby extends Component {
   }
 
   handleStartClick() {
-    alert('game start click');
     window.ee.emit('GAME_START');
   }
 

@@ -2,11 +2,19 @@ import React, { Component } from 'react';
 
 import { getColor } from '../helpers.js';
 
+function handleMouseDown(e) {
+  window.ee.emit('START_MOVE', e.target.id);
+}
+
+function handleMouseUp(e) {
+  window.ee.emit('MOVE_END');
+}
+
 function handleTouchStart(e) {
   window.ee.emit('START_MOVE', e.target.id);
 }
 
-function handleTouchEnd(e) {
+function handleTouchEnd() {
   window.ee.emit('MOVE_END');
 }
 
@@ -20,6 +28,8 @@ var generateButton = name => (
    id={name}
    onTouchStart={handleTouchStart}
    onTouchEnd={handleTouchEnd}
+   onMouseDown={handleMouseDown}
+   onMouseUp={handleMouseUp}
  ></button>
 )
 
@@ -31,7 +41,12 @@ var ControlButtons = props => (
       {generateButton('right')}
       {generateButton('down')}
     </div>
-    {generateButton('push')}
+    <button 
+      className='push'
+      id='push'
+      onTouchStart={handleTouchStart}
+      onMouseDown={handleMouseDown}
+    ></button>
   </div>
 )
 

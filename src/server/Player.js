@@ -1,48 +1,63 @@
-
 function Player(ws, game, customColor) {
 
   this.game = game;
-  //this.players = game.players;
+  this.isKilled = false;
   this.id = null;
   this.interval = null;
   this.ws = ws;
-  this.currVector;
-  this.MOVE_SPEED = 100;
+  this.currVector = null;
+  this.wantAgain = null;
+  this.MOVE_SPEED = 30;
   this.MOVE_WIDTH = 10;
 
   this.size = 80 - 1;
 
-  /*this.collisions = {
-    TOP: null,
-    RIGHT: null,
-    BOTTOM: null,
-    LEFT: null
-  };*/
-  
-  this.setKilled = function() {
-    this.ws.send('GAME_OVER');
+  this.setDeath = function() {
+    this.ws.send(JSON.stringify({ type: 'GAME_OVER'}));
+
+    clearInterval(this.interval);
+    
+    this.isKilled = true;
+    this.wantAgain = false;
+
+    this.game.setPlayerKilled(this);
+  }
+
+  this.sendColor = function() {
+    this.ws.send(JSON.stringify({ type: 'SET_COLOR', colorIndex: this.colorIndex }));
+  }
+
+  this.setWinner = function() {
+    this.wantAgain = false;
+    this.ws.send(JSON.stringify({ type: 'WINNER' }));
   }
 
   this.startGame = function() {
     this.ws.send(JSON.stringify({ type: 'START_GAME'})); 
-    console.log('send signal to client');
   }
 
   this.delFromGame = function() {
     this.game.delPlayer(this);
+
+    if (this.ws.isClosed) return;
+
+    this.ws.send(JSON.stringify({ type: 'START_SCREEN' }));
+  }
+
+  this.delGame = function() {
+    if (this.ws.isClosed) return;
+
+    this.ws.send(JSON.stringify({ type: 'START_SCREEN' }));
   }
 
   this.addToGame = function() {
     this.game.addPlayer(this);   
   }
 
-  this.closeConnection = function() {
-    this.ws.close(); 
-    this.ws = null;
-  };
-  
   this.push = function(num, vector = null) {
-    let vect = this.vector || vector;
+    let vect = this.vector;
+
+    if (vector) vect = vector;
 
     if (!vect) return;
 
@@ -59,21 +74,17 @@ function Player(ws, game, customColor) {
     case 'left': 
       this.x -= num; 
       break;
-    } 
+    }
+
+    let players = this.checkCollision();
+    this.setCollision(vect, players);
+    this.game.sendCoords();
 
     if(this.checkDeath()) {
       this.setDeath();
       return;
     };
-
-    let players = this.checkCollision();
-    this.setCollision(vect, players);
-    this.game.sendCoords();
-    console.log('sended coords');
   }
-  this.setDeath = function() {
-    console.log('death set'); 
-  }  
 
   this.isIntersect = function(x, y) {
     if (x >= this.x && x <= this.x + this.size &&
@@ -124,7 +135,7 @@ function Player(ws, game, customColor) {
   this.checkCollision = function () {
     let collisionPlayers = [];
     for (let i = 0; i < this.game.players.length; i++) {
-      if (this.game.players[i].id === this.id) continue;
+      if (!this.game.players[i] || this.game.players[i].id === this.id) continue;
 
       let collision = this.game.players[i].isIntersect(this.x, this.y) ||
                       this.game.players[i].isIntersect(this.x + this.size, this.y) ||
@@ -140,6 +151,11 @@ function Player(ws, game, customColor) {
     console.log(`starting moving by ${vector}`);
     this.vector = vector;
     this.push(this.MOVE_WIDTH);
+
+    if (this.interval) {
+      clearInterval(this.interval); 
+    }
+
     this.interval = setInterval(() => {
       this.push(this.MOVE_WIDTH); 
     }, this.MOVE_SPEED);
@@ -162,10 +178,6 @@ function Player(ws, game, customColor) {
     this.colorIndex = customColor ? customColor : this.id;
   }
   
-  //this.game.addPlayer(this);
-
-
-    //this.game.sendPlayer(this);
 }
 
 module.exports = Player;

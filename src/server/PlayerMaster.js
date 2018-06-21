@@ -6,39 +6,45 @@ function PlayerMaster(player) {
     ws.on('message', signal => {
       console.log(signal); 
       switch(signal) {
-      case 'MOVE_UP':
+      case '1':
         this.player.startMove('up');
         break;
-      case 'MOVE_RIGHT':
+      case '2':
         this.player.startMove('right');
         break;
-      case 'MOVE_DOWN':
+      case '3':
         this.player.startMove('down');
         break;
-      case 'MOVE_LEFT':
+      case '4':
         this.player.startMove('left');
         break;
 
-      case 'MOVE_END': 
+      case 'E': 
         this.player.stopMove();
         break;
 
-      case 'PUSH':
-        this.player.push(1);
+      case 'P':
+        this.player.push(20);
         break;
 
       case 'DISCONNECT':
         this.player.delFromGame();
+        break;
+      case 'PLAY_AGAIN':
+        this.player.wantAgain = true;
         break;
       }
     });
 
     ws.on('error', event => {
       console.log(event.code);
+      this.player.delFromGame();
     });
 
     ws.on('close', event => {
+      ws.isClosed = true;
       this.player.delFromGame(); 
+      console.log('close socket');
     });
   }
 }

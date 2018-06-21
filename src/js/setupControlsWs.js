@@ -2,12 +2,11 @@ function setup(code) {
   let ws = new WebSocket('ws:192.168.0.65:3002?code=' + code);
  
   ws.onopen = () => {
-    alert('WebSocket is connected');
     this.setState({ mode: 'wait' }); 
   }
 
   ws.onclose = () => {
-    this.setState({ mode: 'err' });
+    alert('websocket closed');
   }
 
   ws.onmessage = msg => {
@@ -21,13 +20,14 @@ function setup(code) {
         this.setState({ mode: 'game-over' });
         break;
       case 'WINNER':
-        this.setState({ mode: 'winner' });
+        this.setState({ isWinner: true, mode: 'game-over' });
         break;
       case 'START_GAME':
         this.setState({ mode: 'play' });
         break;
       case 'START_SCREEN':
-        this.setState({ mode: 'start' })
+        this.setState({ mode: 'connect-start' });
+        ws.close();
         break;
       case 'ERR':
         switch(data.code) {

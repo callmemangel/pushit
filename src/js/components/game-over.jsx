@@ -1,6 +1,15 @@
 import React from 'react';
 
-function handleClick(e) {}
+function handleClick(e) {
+  switch(e.target.id) {
+    case 'play-again':
+      window.ee.emit('PLAY_AGAIN');
+      break;
+    case 'stop-game':
+      window.ee.emit('STOP_GAME');
+      break;
+  }
+}
 
 let style1 = {
   marginLeft: 0 

@@ -17,7 +17,7 @@ export default class Controls extends Component {
     super(props);  
     
     this.state = {
-      colorIndex: 1,
+      colorIndex: null,
       mode: 'connect-start', //wait, play, game over 
       isWinner: false 
     }
@@ -30,22 +30,32 @@ export default class Controls extends Component {
     window.ee.on('START_MOVE', (vector) => {
       switch(vector) {
       case 'up':
-        this.ws.send('MOVE_UP');
+        this.ws.send('1');
         break;
       case 'right':
-        this.ws.send('MOVE_RIGHT');
+        this.ws.send('2');
         break;
       case 'down':
-        this.ws.send('MOVE_DOWN');
+        this.ws.send('3');
         break;
       case 'left':
-        this.ws.send('MOVE_LEFT');
+        this.ws.send('4');
         break;
+      case 'push':
+        this.ws.send('P');
       }
     });
 
     window.ee.on('MOVE_END', () => {
-      this.ws.send('MOVE_END'); 
+      this.ws.send('E'); 
+    });
+
+    window.ee.on('PLAY_AGAIN', () => {
+      this.ws.send('PLAY_AGAIN');
+    });
+
+    window.ee.on('STOP_GAME', () => {
+      this.ws.send('DISCONNECT');
     });
   } 
 

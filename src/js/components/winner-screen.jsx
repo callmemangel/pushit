@@ -3,6 +3,8 @@ import WinnerTitle from './winner-title.jsx';
 import WinnerPlayer from './winner-player.jsx';
 import WinnerButtons from './winner-buttons.jsx';
 
+import { getColor } from '../helpers.js';
+
 export default class WinnerScreen extends Component {
 
   render() {
@@ -10,7 +12,7 @@ export default class WinnerScreen extends Component {
       <div className='winner-screen'> 
         <WinnerTitle /> 
         <WinnerButtons />
-        <WinnerPlayer color={this.props.color}/>
+        <WinnerPlayer color={getColor(this.props.color)}/>
       </div>
     )
   }
