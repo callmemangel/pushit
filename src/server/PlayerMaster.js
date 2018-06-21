@@ -46,6 +46,12 @@ function PlayerMaster(player) {
       this.player.delFromGame(); 
       console.log('close socket');
     });
+
+    ws.sendSafe = function(string) {
+      if (this.isClosed) return; 
+
+      this.send(string);
+    }
   }
 }
 

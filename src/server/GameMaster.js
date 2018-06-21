@@ -29,6 +29,12 @@ function GameMaster(game) {
       ws.isClosed = true;
       this.game.del();
     }); 
+
+    ws.sendSafe = function(string) {
+      if (this.isClosed) return;
+
+      this.send(string); 
+    }
   }
 
 }

@@ -13,7 +13,7 @@ function Player(ws, game, customColor) {
   this.size = 80 - 1;
 
   this.setDeath = function() {
-    this.ws.send(JSON.stringify({ type: 'GAME_OVER'}));
+    this.ws.sendSafe(JSON.stringify({ type: 'GAME_OVER'}));
 
     clearInterval(this.interval);
     
@@ -24,16 +24,16 @@ function Player(ws, game, customColor) {
   }
 
   this.sendColor = function() {
-    this.ws.send(JSON.stringify({ type: 'SET_COLOR', colorIndex: this.colorIndex }));
+    this.ws.sendSafe(JSON.stringify({ type: 'SET_COLOR', colorIndex: this.colorIndex }));
   }
 
   this.setWinner = function() {
     this.wantAgain = false;
-    this.ws.send(JSON.stringify({ type: 'WINNER' }));
+    this.ws.sendSafe(JSON.stringify({ type: 'WINNER' }));
   }
 
   this.startGame = function() {
-    this.ws.send(JSON.stringify({ type: 'START_GAME'})); 
+    this.ws.sendSafe(JSON.stringify({ type: 'START_GAME'})); 
   }
 
   this.delFromGame = function() {
@@ -41,13 +41,13 @@ function Player(ws, game, customColor) {
 
     if (this.ws.isClosed) return;
 
-    this.ws.send(JSON.stringify({ type: 'START_SCREEN' }));
+    this.ws.sendSafe(JSON.stringify({ type: 'START_SCREEN' }));
   }
 
   this.delGame = function() {
     if (this.ws.isClosed) return;
 
-    this.ws.send(JSON.stringify({ type: 'START_SCREEN' }));
+    this.ws.sendSafe(JSON.stringify({ type: 'START_SCREEN' }));
   }
 
   this.addToGame = function() {

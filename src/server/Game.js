@@ -13,7 +13,6 @@ function Game(code, mode, type, games) {
   this.displays = [];
   this.games = games;
 
-
   this.sendCoords = function() {
     let coords = this.getAllCoords();
     console.log(coords);
@@ -60,7 +59,6 @@ function Game(code, mode, type, games) {
         counter++; 
       }
     });
-
     return counter;
   }
 
@@ -138,7 +136,7 @@ function Game(code, mode, type, games) {
   }
 
   this.addDisplay = function(display) {
-     for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 4; i++) {
       if (!this.displays[i]) {
         this.displays[i] = display;
         display.id = i;

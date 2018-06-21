@@ -2,11 +2,15 @@ function Display(ws, game) {
   this.ws = ws;
   this.game = game;
 
-
   ws.on('close', () => {
     ws.isClosed = true; 
     console.log('DISPLAY CLOSED');
   });
+
+  ws.sendSafe = function(string) {
+    if (this.isClosed) return; 
+    this.send(string);
+  }
 
   this.delFromGame = function() {
     game.delDisplay(this); 
@@ -17,31 +21,23 @@ function Display(ws, game) {
   }
 
   this.renderWinner = function(colorIndex) {
-    if (ws.isClosed) return;
-
-    this.ws.send(JSON.stringify({ type: 'GOT_WINNER', colorIndex: colorIndex }));
+    this.ws.sendSafe(JSON.stringify({ type: 'GOT_WINNER', colorIndex: colorIndex }));
   }
 
   this.close = function() {
-    if (ws.isClosed) return;
-
-    this.ws.send(JSON.stringify({ type: 'GAME_DELETE' }));
+    this.ws.sendSafe(JSON.stringify({ type: 'GAME_DELETE' }));
   }
 
   this.delPlayer = function(id) {
-    if (ws.isClosed) return;
-
-    this.ws.send(JSON.stringify({ type: 'DELETE_PLAYER', id: id }));
+    this.ws.sendSafe(JSON.stringify({ type: 'DELETE_PLAYER', id: id }));
   }
 
   this.killPlayer = function(id) {
-    if (ws.isClosed) return;
-    this.ws.send(JSON.stringify({ type: 'KILL_PLAYER', id: id }));
+    this.ws.sendSafe(JSON.stringify({ type: 'KILL_PLAYER', id: id }));
   }
 
   this.sendCoords = function(coords) {
-    if (ws.isClosed) return;
-    this.ws.send(JSON.stringify({ type: 'C', coords: coords.join('.')}));
+    this.ws.sendSafe(JSON.stringify({ type: 'C', coords: coords.join('.')}));
   }
 
   this.sendPlayer = function(player) {
@@ -52,7 +48,7 @@ function Display(ws, game) {
       id: player.id
     } 
     console.log(obj);
-    this.ws.send(JSON.stringify({ type: 'ADD_PLAYER', player: obj}));
+    this.ws.sendSafe(JSON.stringify({ type: 'ADD_PLAYER', player: obj}));
   }
 }
 
