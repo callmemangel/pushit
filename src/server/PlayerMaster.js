@@ -44,7 +44,6 @@ function PlayerMaster(player) {
     ws.on('close', event => {
       ws.isClosed = true;
       this.player.delFromGame(); 
-      console.log('close socket');
     });
 
     ws.sendSafe = function(string) {

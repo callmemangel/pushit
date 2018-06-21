@@ -1,5 +1,4 @@
 function Player(ws, game, customColor) {
-
   this.game = game;
   this.isKilled = false;
   this.id = null;
@@ -39,14 +38,10 @@ function Player(ws, game, customColor) {
   this.delFromGame = function() {
     this.game.delPlayer(this);
 
-    if (this.ws.isClosed) return;
-
     this.ws.sendSafe(JSON.stringify({ type: 'START_SCREEN' }));
   }
 
   this.delGame = function() {
-    if (this.ws.isClosed) return;
-
     this.ws.sendSafe(JSON.stringify({ type: 'START_SCREEN' }));
   }
 
@@ -82,16 +77,12 @@ function Player(ws, game, customColor) {
 
     if(this.checkDeath()) {
       this.setDeath();
-      return;
     };
   }
 
   this.isIntersect = function(x, y) {
-    if (x >= this.x && x <= this.x + this.size &&
-        y >= this.y && y <= this.y + this.size) {
-      return true; 
-    } 
-    return false; 
+    return (x >= this.x && x <= this.x + this.size &&
+        y >= this.y && y <= this.y + this.size);
   }
 
   this.checkDeath = function() {
@@ -134,6 +125,7 @@ function Player(ws, game, customColor) {
 
   this.checkCollision = function () {
     let collisionPlayers = [];
+
     this.game.players.forEach(player => {
       if (!player || player.id === this.id) return;
 
@@ -148,13 +140,10 @@ function Player(ws, game, customColor) {
   }
 
   this.startMove = function(vector) {
-    console.log(`starting moving by ${vector}`);
     this.vector = vector;
     this.push(this.MOVE_WIDTH);
 
-    if (this.interval) {
-      clearInterval(this.interval); 
-    }
+    clearInterval(this.interval); 
 
     this.interval = setInterval(() => {
       this.push(this.MOVE_WIDTH); 
@@ -177,7 +166,6 @@ function Player(ws, game, customColor) {
   this.setInitialColor = function() {
     this.colorIndex = customColor ? customColor : this.id;
   }
-  
 }
 
 module.exports = Player;

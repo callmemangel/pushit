@@ -23,7 +23,6 @@ function Game(code, mode, type, games) {
   
   this.delPlayer = function(player) {
     let id = player.id;
-    console.log('id', id);
     if (id === null) return;
 
     delete this.players[id]; 

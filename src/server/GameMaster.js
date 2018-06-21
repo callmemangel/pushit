@@ -1,5 +1,4 @@
 function GameMaster(game) {
-
   this.game = game;
 
   this.configurate = function(ws) {
@@ -8,8 +7,6 @@ function GameMaster(game) {
         
       switch(data.type) {
       case 'GAME_START':
-        console.log('game start signal');
-        console.log(this.game);
         this.game.startGame();
         break;
       case 'PLAY_AGAIN':
@@ -36,7 +33,6 @@ function GameMaster(game) {
       this.send(string); 
     }
   }
-
 }
 
 module.exports = GameMaster;
