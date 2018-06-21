@@ -17,9 +17,9 @@ function Game(code, mode, type, games) {
   this.sendCoords = function() {
     let coords = this.getAllCoords();
     console.log(coords);
-    for(let i = 0; i < this.displays.length; i++) {
-      this.displays[i].sendCoords(coords);
-    } 
+    this.displays.forEach(display => {
+      display.sendCoords(coords);
+    });
   }
   
   this.delPlayer = function(player) {
@@ -30,9 +30,9 @@ function Game(code, mode, type, games) {
     delete this.players[id]; 
     this.freePlayerSpaces++;
 
-    for (let i = 0; i < this.displays.length; i++) {
-      this.displays[i].delPlayer(id); 
-    }
+    this.displays.forEach(display => {
+      display.delPlayer(id); 
+    });
 
     this.checkGameOver();
   }
@@ -43,9 +43,9 @@ function Game(code, mode, type, games) {
 
     if (id === null) return;
 
-    for (let i = 0; i < this.displays.length; i++) {
-      this.displays[i].killPlayer(id); 
-    }
+    this.displays.forEach(display => {
+      display.killPlayer(id); 
+    });
 
     this.checkGameOver();
   }
@@ -53,44 +53,48 @@ function Game(code, mode, type, games) {
   this.getKilledPlayers = function() {
     let counter = 0; 
 
-    for (let i = 0; i < this.players.length; i++) {
-      if (!this.players[i]) continue;
-      if (this.players[i].isKilled) {
+    this.players.forEach(player => {
+      if (!player) return;
+
+      if (player.isKilled) {
         counter++; 
       }
-    }
+    });
 
     return counter;
   }
 
   this.clearIdlePlayers = function() {
-    for (let i = 0; i < this.players.length; i++) {
-      if (!this.players[i]) continue;
+    this.players.forEach(player => {
+      if (!player) return;
 
-      if (!this.players[i].wantAgain) {
-        this.players[i].delFromGame(); 
+      if (!player.wantAgain) {
+        player.delFromGame(); 
       }
-    } 
+    });
   }
   
   this.getLastPlayer = function() {
-    for (let i = 0; i < this.players.length; i++) {
-      if (!this.players[i]) continue;
-      if (!this.players[i].isKilled) return this.players[i];
-    } 
-    return null;
+    let lastPlayer = null;
+    this.players.forEach(player => {
+      if (!player) return;
+
+      if (!player.isKilled) lastPlayer = player;
+    });
+
+    return lastPlayer;
   }
 
   this.getPlayersNum = function() {
     let counter = 0;
-    for (let i = 0; i < this.players.length; i++) {
-      if (this.players[i]) counter++; 
-    } 
+    this.players.forEach(player => {
+      if (player) counter++; 
+    });
     return counter;
   }
 
   this.checkGameOver = function() {
-    if (this.getKilledPlayers() === this.players.length - 1) { //this.players.length - 1
+    if (this.getKilledPlayers() === this.getPlayersNum() - 1) { //this.players.length - 1
       let player = this.getLastPlayer();
       if (!player) return;
       this.renderWinner(player); 
@@ -101,15 +105,15 @@ function Game(code, mode, type, games) {
   }
 
   this.stopGame = function() {
-    for (let i = 0; i < this.players.length; i++) {
-      clearInterval(this.players[i].interval); 
-    } 
+    this.players.forEach(player => {
+      clearInterval(player.interval); 
+    });
   }
 
   this.renderWinner = function(player) {
-    for (let i = 0; i < this.displays.length; i++) {
-      this.displays[i].renderWinner(player.colorIndex);
-    } 
+    this.displays.forEach(display => {
+      display.renderWinner(player.colorIndex);
+    });
   }
 
   this.delDisplay = function(display) {
@@ -146,34 +150,34 @@ function Game(code, mode, type, games) {
   }
 
   this.sendPlayer = function(player) {
-    for (let i = 0; i < this.displays.length; i++) {
-      this.displays[i].sendPlayer(player); 
-    } 
+    this.displays.forEach(display => {
+      display.sendPlayer(player); 
+    });
   }
 
   this.getAllCoords = function() {
     let coords = [];
-    for (let i = 0; i < this.players.length; i++) {
-      if (!this.players[i]) {
+    this.players.forEach(player => {
+      if (!player) {
         coords.push(undefined); 
         coords.push(undefined); 
-        continue;
+        return;
       }
-      coords.push(this.players[i].x);
-      coords.push(this.players[i].y);
-    } 
+      coords.push(player.x);
+      coords.push(player.y);
+    });
     return coords;
   }
 
   this.startGame = function() {
     console.log('Game starting...', this.players.length);
-    for (let i = 0; i < this.players.length; i++) {
-      if (!this.players[i]) continue;
+    this.players.forEach(player => {
+      if (!player) return;
 
-      this.players[i].setInitialCoords();
-      this.players[i].isKilled = false;
-      this.players[i].startGame(); 
-    }
+      player.setInitialCoords();
+      player.isKilled = false;
+      player.startGame(); 
+    });
     this.sendCoords();
   }
 
@@ -193,14 +197,16 @@ function Game(code, mode, type, games) {
   this.del = function() {
 
     console.log('trying to deleting game...');
-    for (let i = 0; i < this.players.length; i++) {
-      if (!this.players[i]) continue;
-      this.players[i].delGame(); 
-    }    
-    for (let i = 0; i < this.displays.length; i++) {
-      if (!this.displays[i]) continue;
-      this.displays[i].close();
-    }
+
+    this.players.forEach(player => {
+      if (!player) return;
+      player.delGame(); 
+    });
+
+    this.displays.forEach(display => {
+      if (!display) return;
+      display.close();
+    });
 
     delete this.games[this.id];
   }

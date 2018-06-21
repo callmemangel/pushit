@@ -104,46 +104,46 @@ function Player(ws, game, customColor) {
   }
   
   this.setCollision = function(vect, players) {
-    for (let i = 0; i < players.length; i++) {
+    players.forEach(player => {
       let pushObj = {};
 
       switch(vect) {
       case 'up':
-        pushObj.collisionW = players[i].y + players[i].size - this.y + 1;
+        pushObj.collisionW = player.y + player.size - this.y + 1;
         pushObj.vector = 'up';
         break;
 
       case 'right':
-        pushObj.collisionW = this.x + this.size - players[i].x + 1;
+        pushObj.collisionW = this.x + this.size - player.x + 1;
         pushObj.vector = 'right';
         break;
 
       case 'down':
-        pushObj.collisionW = this.y + this.size - players[i].y + 1;
+        pushObj.collisionW = this.y + this.size - player.y + 1;
         pushObj.vector = 'down';
         break;
 
       case 'left':
-        pushObj.collisionW = players[i].x + players[i].size - this.x + 1;
+        pushObj.collisionW = player.x + player.size - this.x + 1;
         pushObj.vector = 'left';
       }
         
-      players[i].push(pushObj.collisionW, pushObj.vector); 
-    }
+      player.push(pushObj.collisionW, pushObj.vector); 
+    });
   }
 
   this.checkCollision = function () {
     let collisionPlayers = [];
-    for (let i = 0; i < this.game.players.length; i++) {
-      if (!this.game.players[i] || this.game.players[i].id === this.id) continue;
+    this.game.players.forEach(player => {
+      if (!player || player.id === this.id) return;
 
-      let collision = this.game.players[i].isIntersect(this.x, this.y) ||
-                      this.game.players[i].isIntersect(this.x + this.size, this.y) ||
-                      this.game.players[i].isIntersect(this.x + this.size, this.y + this.size) ||
-                      this.game.players[i].isIntersect(this.x, this.y + this.size); 
+      let collision = player.isIntersect(this.x, this.y) ||
+                      player.isIntersect(this.x + this.size, this.y) ||
+                      player.isIntersect(this.x + this.size, this.y + this.size) ||
+                      player.isIntersect(this.x, this.y + this.size); 
 
-      if (collision) collisionPlayers.push(this.game.players[i]);
-    }
+      if (collision) collisionPlayers.push(player);
+    });
     return collisionPlayers;
   }
 
