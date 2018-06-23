@@ -5,8 +5,8 @@
   "main": "app.js",
   "scripts": {
     "test": "webpack --mode development -w --progress --colors --config webpack-test.config.js",
-    "dev": "webpack-dev-server --mode development --host 192.168.0.65 --open",
-    "build": "webpack --mode development"
+    "dev": "NODE_ENV=development webpack-dev-server --mode development --host 192.168.0.65 --open",
+    "build": "NODE_ENV=development webpack --mode development"
   },
   "repository": {
     "type": "git",
