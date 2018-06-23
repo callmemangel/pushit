@@ -48,7 +48,7 @@ function PlayerMaster(player) {
 
     ws.sendSafe = function(string) {
       if (this.isClosed) return; 
-
+      //TODO add socket state check
       this.send(string);
     }
   }

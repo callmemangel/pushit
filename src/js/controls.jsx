@@ -1,12 +1,13 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { render } from 'react-dom';
+import EventEmitter from 'event-emitter';
+
 import Timer from './components/timer.jsx';
-import Invite from'./components/invite.jsx';
+import ControlsInvite from'./components/controls-invite.jsx';
 import ControlButtons from './components/control-buttons.jsx';
 import PlayInfo from './components/play-info.jsx';
 import GameOver from './components/game-over.jsx';
-import EventEmitter from 'event-emitter';
 
 import setupWebSocket from './setupControlsWs.js';
 
@@ -19,11 +20,13 @@ export default class Controls extends Component {
     this.state = {
       colorIndex: null,
       mode: 'connect-start', //wait, play, game over 
-      isWinner: false 
+      isWinner: false,
+      code: ''
     }
 
     this.handleStartClick = this.handleStartClick.bind(this);
     this.setupWebSocket = setupWebSocket.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
   
   componentDidMount() {
@@ -59,12 +62,16 @@ export default class Controls extends Component {
     });
   } 
 
+  handleChange(code) {
+    this.setState({ code: code }) 
+  }
+
   handleStartClick() {
-    axios.post('/connect', { code: '1AB2' })
+    axios.post('/connect', { code: this.state.code })
       .then(res => {
         if (res.data == true) {
-          this.ws = this.setupWebSocket('1AB2');
-          this.setState({ mode: 'connecting' });
+          this.ws = this.setupWebSocket(this.state.code);
+          this.setState({ mode: 'connecting', code: '' });
         } else {
           window.ee.emit('WRONG_CODE'); 
         }
@@ -76,7 +83,7 @@ export default class Controls extends Component {
     case 'connect-start':
       return (
         <div className='controls-start-screen'>
-          <Invite mode={this.state.mode} />
+          <ControlsInvite code={this.state.code} handleChange={this.handleChange} />
           <button onClick={this.handleStartClick} className='no-font'>START GAME</button>
           <PlayInfo />
         </div>

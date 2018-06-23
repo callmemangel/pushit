@@ -37,7 +37,6 @@ function Game(code, mode, type, games) {
 
   this.setPlayerKilled = function(player) {
     let id = player.id;
-    console.log('id', id);
 
     if (id === null) return;
 
@@ -91,13 +90,14 @@ function Game(code, mode, type, games) {
   }
 
   this.checkGameOver = function() {
-    if (this.getKilledPlayers() === this.getPlayersNum() - 1) { //this.players.length - 1
+    if (this.getKilledPlayers() === this.getPlayersNum() - 1) {
       let player = this.getLastPlayer();
       if (!player) return;
+
       this.renderWinner(player); 
       player.setWinner();
+
       this.stopGame();
-      console.log('GAME OVER');
     } 
   }
 
@@ -115,7 +115,6 @@ function Game(code, mode, type, games) {
 
   this.delDisplay = function(display) {
     let id = player.id;
-
     if(!id) return;
 
     delete this.displays[id]; 

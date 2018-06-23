@@ -23,8 +23,22 @@ app.use(express.urlencoded({extended: true}));
 
 app.use('/dist/', express.static(path.join(__dirname, './dist')));
 
+function generateCode() {
+  const SYMBOLS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789';
+  let code = '';
+
+  for (let i = 0; i < 4; i++) {
+    let index = Math.floor(Math.random() * SYMBOLS.length);
+    code += SYMBOLS[index]; 
+  }
+
+  return code;
+}
+
 games.findGame = function(code) {
   for (let i = 0; i < games.length; i++) {
+    if (!games[i]) continue;
+
     if (games[i].code == code) {
       return games[i]; 
     } 
@@ -43,6 +57,7 @@ games.setOnFree = function(game) {
   return null;
 }
 
+
 function getReqCode(req) {
   var url_parts = url.parse(req.url, true);
   var query = url_parts.query;
@@ -51,8 +66,9 @@ function getReqCode(req) {
 
 gameMasterWs.on('connection', (ws, req) => {
   let code = getReqCode(req);
-
-  console.log(`got connection to game display with code = ${code}`);
+  if (process.env.NODE_ENV === 'development') {
+    console.log(`got connection to game display with code = ${code}`);
+  }
 
   let game = games.findGame(code); 
 
@@ -123,7 +139,11 @@ app.get('/play', (req, res) => {
 });
 
 app.post('/generate', (req, res) => {
-  let code = '1AB2'; 
+  let code = generateCode(); 
+  while (games.findGame(code)) {
+    code = generateCode(); 
+  }
+
   let mode = req.body.mode;
   let type = 'local';
 
@@ -131,7 +151,7 @@ app.post('/generate', (req, res) => {
 
   games.setOnFree(game); 
 
-  res.send('1AB2');
+  res.send(code);
 });
 
 

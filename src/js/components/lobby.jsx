@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import LobbyPlayers from './lobby-players.jsx';
-import Invite from './invite.jsx';
+import GameInvite from './game-invite.jsx';
 import LobbyInfo from './lobby-info.jsx';
 
 var renderButtons = function (pageMode, isActive) {
@@ -85,7 +85,7 @@ export default class Lobby extends Component {
     return (
       <div className='lobby'>
         <LobbyInfo mode={this.props.mode} />
-        <Invite code={this.props.code} mode={this.props.mode} /><br/>
+        <GameInvite code={this.props.code} mode={this.props.mode} /><br/>
         {this.renderButtons(this.props.mode, !this.props.code)}
         <LobbyPlayers mode={this.props.mode} players={this.props.players} />
       </div>
