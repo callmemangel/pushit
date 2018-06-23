@@ -42,13 +42,11 @@ function PlayerMaster(player) {
     });
 
     ws.on('close', event => {
-      ws.isClosed = true;
       this.player.delFromGame(); 
     });
 
     ws.sendSafe = function(string) {
-      if (this.isClosed) return; 
-      //TODO add socket state check
+      if (this.readyState == 2 || this.readyState == 3) return; 
       this.send(string);
     }
   }

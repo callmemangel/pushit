@@ -23,12 +23,11 @@ function GameMaster(game) {
     });
 
     ws.on('close', event => {
-      ws.isClosed = true;
       this.game.del();
     }); 
 
     ws.sendSafe = function(string) {
-      if (this.isClosed) return;
+      if (this.readyState == 2 || this.readyState == 3) return; 
 
       this.send(string); 
     }
