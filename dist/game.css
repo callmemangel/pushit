@@ -329,28 +329,25 @@
 #root {
   height: 100%;
 }
-.controls-screen {
+.control-buttons {
   height: 100%;
 }
-.controls-screen .control-buttons.orange button {
+.control-buttons.orange button {
   background: #ff7e5a;
 }
-.controls-screen .control-buttons.green button {
+.control-buttons.green button {
   background: #acbf00;
 }
-.controls-screen .control-buttons.blue button {
+.control-buttons.blue button {
   background: #00a6a0;
 }
-.controls-screen .control-buttons.pink button {
+.control-buttons.pink button {
   background: #ff717b;
 }
-.controls-screen .control-buttons.red button {
+.control-buttons.red button {
   background: #f73149;
 }
-.controls-screen .control-buttons {
-  height: 100%;
-}
-.controls-screen .control-buttons .timer {
+.control-buttons .timer {
   top: 15%;
   left: 50%;
   transform: translateX(-50%);
@@ -360,34 +357,34 @@
   font-family: 'Anton', sans-serif;
   color: #f73149;
 }
-.controls-screen .control-buttons button {
+.control-buttons button {
   font-size: 40px;
   font-family: 'Poppins', sans-serif;
   color: #fff;
   border: 0;
   outline: none;
 }
-.controls-screen .control-buttons .move-buttons {
+.control-buttons .move-buttons {
   margin-top: 3%;
   margin-left: 5%;
   margin-right: 20px;
   display: inline-block;
   vertical-align: top;
 }
-.controls-screen .control-buttons .move-buttons button {
+.control-buttons .move-buttons button {
   width: 203px;
   height: 134px;
   margin: 10px;
 }
-.controls-screen .control-buttons .move-buttons .up {
+.control-buttons .move-buttons .up {
   display: block;
   margin: 0 auto;
 }
-.controls-screen .control-buttons .move-buttons .down {
+.control-buttons .move-buttons .down {
   display: block;
   margin: 0 auto;
 }
-.controls-screen .control-buttons .push {
+.control-buttons .push {
   margin-left: 40px;
   width: 40%;
   height: 100%;

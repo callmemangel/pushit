@@ -386,70 +386,68 @@ body {
 #root {
   height: 100%;
 }
-.controls-screen {
-  height: 100%;
-  .control-buttons.orange {
+
+.control-buttons {
+  &.orange {
     button {background: @orange}; 
   }
-  .control-buttons.green {
+  &.green {
     button {background: @green}; 
   }
-  .control-buttons.blue {
+  &.blue {
     button {background: @blue}; 
   }
-  .control-buttons.pink {
+  &.pink {
     button {background: @pink}; 
   }
-  .control-buttons.red {
+  &.red {
     button {background: @red} 
   }
 
-  .control-buttons {
-    height: 100%;
-    .timer {
-      top: 15%;
-      left: 50%;
-      transform: translateX(-50%);
-      position: absolute;
-      display: inline-block; 
-      font-size: 250px;
-      font-family: 'Anton', sans-serif;
-      color: @red;
-    }
+  height: 100%;
+  .timer {
+    top: 15%;
+    left: 50%;
+    transform: translateX(-50%);
+    position: absolute;
+    display: inline-block; 
+    font-size: 250px;
+    font-family: 'Anton', sans-serif;
+    color: @red;
+  }
+  button {
+    font-size: 40px;
+    font-family: 'Poppins', sans-serif;
+    color: #fff;
+    border: 0;
+    outline: none;
+  }
+  .move-buttons {
+    margin-top: 3%;
+    margin-left: 5%;
+    margin-right: 20px;
+    display: inline-block; 
+    vertical-align: top;
     button {
-      font-size: 40px;
-      font-family: 'Poppins', sans-serif;
-      color: #fff;
-      border: 0;
-      outline: none;
+      width: 203px; 
+      height: 134px;
+      margin: 10px;
+    }    
+    .up {
+      display: block; 
+      margin: 0 auto;
     }
-    .move-buttons {
-      margin-top: 3%;
-      margin-left: 5%;
-      margin-right: 20px;
-      display: inline-block; 
-      vertical-align: top;
-      button {
-        width: 203px; 
-        height: 134px;
-        margin: 10px;
-      }    
-      .up {
-        display: block; 
-        margin: 0 auto;
-      }
-      .down {
-        display: block; 
-        margin: 0 auto;
-      }
-      
+    .down {
+      display: block; 
+      margin: 0 auto;
     }
-    .push {
-      margin-left: 40px;
-      width: 40%;    
-      height: 100%;
-      display: inline-block;
-    }
+    
+  }
+  .push {
+    margin-left: 40px;
+    width: 40%;    
+    height: 100%;
+    display: inline-block;
   }
 }
 

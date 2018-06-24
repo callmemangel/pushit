@@ -18,6 +18,8 @@ function Player(ws, game, customColor) {
     
     this.isKilled = true;
     this.wantAgain = false;
+    this.x = 9999;
+    this.y = 9999;
 
     this.game.setPlayerKilled(this);
   }

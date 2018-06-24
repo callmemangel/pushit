@@ -131,11 +131,11 @@ playerMasterWs.on('connection', (ws, req) => {
 });
 
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname + '/src/game.html'));
+  res.sendFile(path.join(__dirname, '/game.html'));
 });
 
 app.get('/play', (req, res) => {
-  res.sendFile(path.join(__dirname + '/src/controls.html'));
+  res.sendFile(path.join(__dirname, '/controls.html'));
 });
 
 app.post('/generate', (req, res) => {

@@ -1,5 +1,5 @@
 function setup(code) {
-  let ws = new WebSocket('ws:192.168.1.38:3002?code=' + code);
+  let ws = new WebSocket('ws:192.168.0.65:3002?code=' + code);
  
   ws.onopen = () => {
     this.setState({ mode: 'wait' }); 
@@ -26,7 +26,7 @@ function setup(code) {
         this.setState({ mode: 'play' });
         break;
       case 'START_SCREEN':
-        this.setState({ mode: 'connect-start' });
+        this.setState({ mode: 'start' });
         ws.close();
         break;
       case 'ERR':

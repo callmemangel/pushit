@@ -12,4 +12,3 @@ export function getColor(colorIndex) {
     return 'red';
   }
 }
-

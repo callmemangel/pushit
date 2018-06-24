@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { getColor } from '../helpers.js';
+import { getColor } from '../../helpers.js';
 
 function handleMouseDown(e) {
   window.ee.emit('START_MOVE', e.target.id);

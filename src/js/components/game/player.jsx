@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { getColor } from '../helpers.js';
+import { getColor } from '../../helpers.js';
 
 export default class Player extends Component {
   constructor(props) {

@@ -3,11 +3,12 @@ import axios from 'axios';
 import { render } from 'react-dom';
 import EventEmitter from 'event-emitter';
 
-import Timer from './components/timer.jsx';
-import ControlsInvite from'./components/controls-invite.jsx';
-import ControlButtons from './components/control-buttons.jsx';
-import PlayInfo from './components/play-info.jsx';
-import GameOver from './components/game-over.jsx';
+import Invite from'./components/controls/invite.jsx';
+import Buttons from './components/controls/buttons.jsx';
+import PlayInfo from './components/controls/play-info.jsx';
+import GameOver from './components/controls/game-over.jsx';
+import StartScreen from './components/controls/start-screen.jsx';
+import WaitScreen from './components/controls/wait-screen.jsx';
 
 import setupWebSocket from './setupControlsWs.js';
 
@@ -19,14 +20,11 @@ export default class Controls extends Component {
     
     this.state = {
       colorIndex: null,
-      mode: 'connect-start', //wait, play, game over 
-      isWinner: false,
-      code: ''
+      mode: 'start', //wait, play, game over 
+      isWinner: false
     }
 
-    this.handleStartClick = this.handleStartClick.bind(this);
     this.setupWebSocket = setupWebSocket.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
   
   componentDidMount() {
@@ -60,64 +58,34 @@ export default class Controls extends Component {
     window.ee.on('STOP_GAME', () => {
       this.ws.send('DISCONNECT');
     });
+
+    window.ee.on('CONNECT_START', code => {
+      axios.post('/connect', { code: code })
+        .then(res => {
+          if (res.data == false) {
+            window.ee.emit('WRONG_CODE'); 
+            return;
+          }
+          this.ws = this.setupWebSocket(code);
+          this.setState({ mode: 'connecting', code: '' });
+        })
+    })
   } 
 
-  handleChange(code) {
-    this.setState({ code: code }) 
-  }
-
-  handleStartClick() {
-    axios.post('/connect', { code: this.state.code })
-      .then(res => {
-        if (res.data == true) {
-          this.ws = this.setupWebSocket(this.state.code);
-          this.setState({ mode: 'connecting', code: '' });
-        } else {
-          window.ee.emit('WRONG_CODE'); 
-        }
-      });
-  }
-
   render() {
-    switch(this.state.mode) {
-    case 'connect-start':
-      return (
-        <div className='controls-start-screen'>
-          <ControlsInvite code={this.state.code} handleChange={this.handleChange} />
-          <button onClick={this.handleStartClick} className='no-font'>START GAME</button>
-          <PlayInfo />
-        </div>
-      ) 
-    case 'connecting':
-      return (
-        <div className='controls-wait-screen'>
-          <p className='wait-title'>Connecting...</p> 
-          <PlayInfo />
-        </div>
-    )
-
-    case 'wait':
-      return (
-        <div className='controls-wait-screen'>
-          <p className='wait-title'>Connected, waiting for game to start</p> 
-          <PlayInfo />
-        </div>
-      )
-    case 'play':
-      return (
-        <div className='controls-screen'>
-          <ControlButtons colorIndex={this.state.colorIndex} />
-        </div>
-      )
-    case 'game-over':
-      return (
-        <GameOver winner={this.state.isWinner} />  
-      )
-    case 'err':
-      return (
-        <h1>Error, something went wrong</h1> 
-      )
-    }
+    let mode = this.state.mode;
+    return (
+      <div>
+        {mode === 'start' && <StartScreen/>}
+        {mode === 'connection' || mode === 'wait' ?
+             <WaitScreen mode={this.state.mode}/> : 
+             null
+        }
+        {mode === 'play' && <Buttons colorIndex={this.state.colorIndex}/>}
+        {mode === 'game-over' && <GameOver winner={this.state.isWinner}/>}
+        {mode === 'err' && <h1>Error, something went wrong</h1>}
+      </div>
+    );
   }
 }
 

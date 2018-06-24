@@ -4,9 +4,9 @@ import { render } from 'react-dom';
 import EventEmitter from 'event-emitter';
 import SetupSocket from './setupGameWs.js';
 
-import Lobby from './components/lobby.jsx';
-import Field from './components/field.jsx';
-import WinnerScreen from './components/winner-screen.jsx';
+import Lobby from './components/game/lobby.jsx';
+import Field from './components/game/field.jsx';
+import WinnerScreen from './components/game/winner-screen.jsx';
 
 
 import '../less/game.less';
@@ -19,7 +19,7 @@ class Game extends Component {
     this.state = {
       mode: 'start', //play, wait-friend, wait-online, winner 
       winnerColorIndex: null,
-      code: null,
+      code: '',
       players: []
     } 
 
@@ -29,7 +29,6 @@ class Game extends Component {
 
   setCoords(coords) {
     let players = this.state.players;
-    
     coords = coords.split('.');
 
     for (let i = 0; i < players.length; i++) {
@@ -38,11 +37,9 @@ class Game extends Component {
     }
 
     this.setState({ players: players });
-    this.forceUpdate();
   };
 
   componentDidMount() {
-    //  this.setupWebSocket();      
     window.ee.on('GENERATE', gameMode => {
       this.setState({ 
         mode: 'wait-friends'
@@ -61,10 +58,10 @@ class Game extends Component {
       this.setState({ mode: 'wait-online' });
       axios.post('/generate', { mode: gameMode })
         .then(res => {
-          //this.ws = setupWebSocket(res);
-          //window.ee.emit('SET_CODE', res);
+          let code = res.data;
+          this.ws = this.setupWebSocket(code, gameMode);
+          this.setState({ code: code });
         })
-
     });
 
     window.ee.on('GAME_START', () => {
@@ -79,7 +76,7 @@ class Game extends Component {
 
     window.ee.on('NEW_GAME', () => {
       this.ws.send(JSON.stringify({ type: 'DISCONNECT' }));
-      this.setState({ mode: 'start', players: [], code: null });
+      this.setState({ mode: 'start', players: [], code: '' });
     });
   }
 
@@ -89,10 +86,8 @@ class Game extends Component {
     } else if (this.state.mode == 'winner') {
       return <WinnerScreen color={this.state.winnerColorIndex} /> 
     }
-
     return <Lobby code={this.state.code} players={this.state.players} mode={this.state.mode} />
   }
-
 }
 
 render(<Game />, document.getElementById('root'));

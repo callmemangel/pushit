@@ -1,5 +1,5 @@
 function setupWebSocket(code, gameMode) {
-    let ws = new WebSocket('ws:192.168.1.38:3001?code=' + code + '&gameMode=' + gameMode); 
+    let ws = new WebSocket('ws:192.168.0.65:3001?code=' + code + '&gameMode=' + gameMode); 
     
     ws.onclose = function() {
       alert('client game socket closed');
@@ -65,9 +65,6 @@ function setupWebSocket(code, gameMode) {
           break;
         case 'KILL_PLAYER':
           let plrs = this.state.players;
-
-          prls[msg.id].x = 9999;
-          plrs[msg.id].y = 9999;
 
           this.setState({ players: plrs });
           console.log('player killed ' + msg.id);

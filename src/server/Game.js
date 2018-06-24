@@ -37,12 +37,9 @@ function Game(code, mode, type, games) {
 
   this.setPlayerKilled = function(player) {
     let id = player.id;
-
     if (id === null) return;
-
-    this.displays.forEach(display => {
-      display.killPlayer(id); 
-    });
+    
+    this.sendCoords();
 
     this.checkGameOver();
   }
