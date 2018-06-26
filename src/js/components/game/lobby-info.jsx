@@ -1,11 +1,22 @@
 import React from 'react';
+import styled from 'styled-components';
+import { palette } from '../../styled-components';
+
+const Info = styled.p`
+  font-family: 'Poppins', sans-serif;
+  font-size: 30px;
+  color: ${palette.RED};
+  border-bottom: 1px solid ${palette.BLUE};
+  padding-bottom: 20px;
+`;
 
 var LobbyInfo = props => (
-  <p className='lobby-info'>
+  <Info>
     open www.pushed.com/play<br/>
     on your smartphone and<br/>
     insert code there<br/>
-  </p>
+  </Info>
 )
+
 
 export default LobbyInfo;

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { render } from 'react-dom';
 import EventEmitter from 'event-emitter';
+import styled from 'styled-components';
 
 import Invite from'./components/controls/invite.jsx';
 import Buttons from './components/controls/buttons.jsx';
@@ -12,6 +13,12 @@ import WaitScreen from './components/controls/wait-screen.jsx';
 
 import setupWebSocket from './setupControlsWs.js';
 
+import { CenterWrapper } from './styled-components';
+
+const Div = styled.div`
+  height: 100%;
+`;
+
 window.ee = new EventEmitter();
 
 export default class Controls extends Component {
@@ -21,8 +28,9 @@ export default class Controls extends Component {
     this.state = {
       colorIndex: null,
       mode: 'start', //wait, play, game over 
-      isWinner: false
+      isWinner: true 
     }
+
 
     this.setupWebSocket = setupWebSocket.bind(this);
   }
@@ -75,7 +83,7 @@ export default class Controls extends Component {
   render() {
     let mode = this.state.mode;
     return (
-      <div>
+      <Div>
         {mode === 'start' && <StartScreen/>}
         {mode === 'connection' || mode === 'wait' ?
              <WaitScreen mode={this.state.mode}/> : 
@@ -84,7 +92,7 @@ export default class Controls extends Component {
         {mode === 'play' && <Buttons colorIndex={this.state.colorIndex}/>}
         {mode === 'game-over' && <GameOver winner={this.state.isWinner}/>}
         {mode === 'err' && <h1>Error, something went wrong</h1>}
-      </div>
+      </Div>
     );
   }
 }

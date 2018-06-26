@@ -24,6 +24,7 @@ function PlayerMaster(player) {
         break;
 
       case 'P':
+        console.log('pushh');
         this.player.push(20);
         break;
 

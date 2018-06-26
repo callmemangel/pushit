@@ -1,5 +1,17 @@
 import React from 'react';
 import LobbyPlayer from './lobby-player.jsx';
+import styled from 'styled-components';
+import { palette } from '../../styled-components';
+
+const Players = styled.div`
+  width: 65%;
+  height: 100%;
+`
+const Title = styled.p` 
+  color: ${palette.RED};
+  font-size: 24px;
+  text-align: center;
+`;
 
 var LobbyPlayers = props => {
   var players = props.players.map((player, index) => {
@@ -9,10 +21,10 @@ var LobbyPlayers = props => {
   });
 
   return (
-    <div className='lobby-players'>
+    <Players>
       {players} 
-      <p>Waiting for players</p>
-    </div>
+      <Title>Waiting for players</Title>
+    </Players>
   )
 }
 

@@ -1,5 +1,14 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
+import { backgroundProps } from '../../styled-components/props-receivers';
 import { getColor } from '../../helpers.js';
+
+const PlayerDiv = styled.div`
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  ${backgroundProps};
+`;
 
 export default class Player extends Component {
   constructor(props) {
@@ -19,13 +28,14 @@ export default class Player extends Component {
   }
   
   render() {
+    let color = getColor(this.props.player.colorIndex);
     return (
-      <div 
+      <PlayerDiv 
+        background={color} 
         style={{ left: this.state.x, top: this.state.y }}
         onClick={this.handleClick}
-        className={'player ' +  getColor(this.props.player.colorIndex)}
       >
-      </div>
+      </PlayerDiv>
     )
   }
 }

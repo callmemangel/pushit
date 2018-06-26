@@ -1,13 +1,25 @@
 import React from 'react';
+import { Square, InviteInput, InviteWrapper, Label, RightLabel } from '../../styled-components';
 
-let GameInvite = props => (
-  <div className='invite-wrapper'>
-    <label htmlFor='code'>invite code</label>
-    {props.mode == 'start' && <div className='invite-square pink'></div>}
-    <input id='code' value={props.code} disabled={true}/>
-    {props.mode == 'start' && <div className='invite-square blue'></div>}
-    <label className='right label2' htmlFor='code'>4max</label>
-  </div>
+const RightSquare = Square.extend`
+  position: absolute;
+  top: -12px;
+  right: 0px;
+`;
+
+const LeftSquare = Square.extend`
+  margin-top: 5px;
+`;
+
+
+let Invite = props => (
+  <InviteWrapper>
+    <Label red htmlFor='code'>invite code</Label>
+    {props.mode == 'start' && <RightSquare pink small></RightSquare>}
+    <InviteInput id='code' value={props.code} disabled={true}/> 
+    {props.mode == 'start' && <LeftSquare blue small></LeftSquare>}
+    <RightLabel pink htmlFor='code'>4max</RightLabel>
+  </InviteWrapper>
 )
 
-export default GameInvite;
+export default Invite;

@@ -1,0 +1,23 @@
+import React from 'react';
+
+import PlayInfo from './play-info.jsx';
+
+import { FlexEnd, FlexStart } from './start-screen.jsx';
+import { CenterWrapper } from '../../styled-components';
+
+let WaitScreen = props => (
+  <CenterWrapper>
+    <FlexStart column height='100%'>
+      <p className='wait-title'>
+        {props.mode === 'connecting' ? 'Connecting...' 
+                                     : 'Connected, waiting for game to start'}
+      </p> 
+    </FlexStart>
+    <FlexStart height='100%'>
+
+      <PlayInfo />
+    </FlexStart>
+  </CenterWrapper>
+)
+
+export default WaitScreen;

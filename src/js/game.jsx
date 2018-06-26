@@ -9,8 +9,7 @@ import Field from './components/game/field.jsx';
 import WinnerScreen from './components/game/winner-screen.jsx';
 
 
-import '../less/game.less';
-
+import '../less/reset.less';
 window.ee = new EventEmitter();
 
 class Game extends Component {
@@ -18,7 +17,7 @@ class Game extends Component {
     super();
     this.state = {
       mode: 'start', //play, wait-friend, wait-online, winner 
-      winnerColorIndex: null,
+      winnerColorIndex:2,
       code: '',
       players: []
     } 

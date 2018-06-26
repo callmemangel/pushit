@@ -93,7 +93,8 @@ function Game(code, mode, type, games) {
 
       this.renderWinner(player); 
       player.setWinner();
-
+      
+      console.log('got winner');
       this.stopGame();
     } 
   }

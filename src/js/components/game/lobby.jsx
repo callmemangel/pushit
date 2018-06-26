@@ -3,33 +3,47 @@ import React, { Component } from 'react';
 import LobbyPlayers from './lobby-players.jsx';
 import Invite from './invite.jsx';
 import LobbyInfo from './lobby-info.jsx';
+import { Button, CenterWrapper, Container } from '../../styled-components';
+
+const OffsetButton1 = Button.extend`
+  margin-top: -35px;
+`;
+
+const OffsetButton2 = Button.extend`
+  margin-top: -20px;
+  margin-left: 55px;
+`
+
+const CustomContainer = Container.extend`
+  height: 40%;
+`
 
 function renderButtons (pageMode, isActive) {
   let buttons = [];
   if (pageMode === 'start') {
     buttons.push(
-      <button key={1} onClick={this.handleGenClick}>
+      <Button red bold fontSize='90px' key={1} onClick={this.handleGenClick}>
         Generate
-      </button>
+      </Button>
     );
     buttons.push(
-      <button key={2} onClick={this.handleOnlineClick}>
+      <OffsetButton1 pink bold fontSize='70px' key={2} onClick={this.handleOnlineClick}>
         play online
-      </button>
+      </OffsetButton1>
     );
     buttons.push(
-      <button key={3} onClick={this.handleModeClick}>
+      <OffsetButton2 blue bold fontSize='36px' key={3} onClick={this.handleModeClick}>
         Gamemode: {this.state.gameMode}
-      </button>
+      </OffsetButton2>
     );
   } else if (pageMode === 'wait-friends') {
     buttons.push(
-      <button 
-        className='game-start-btn' 
+      <Button 
+        red bold fontSize='80px'
         disabled={isActive} 
         onClick={this.handleStartClick}
         key={4}
-      >Start</button>
+      >Start</Button>
     );
   }
 
@@ -75,21 +89,30 @@ export default class Lobby extends Component {
   render() {
     let mode = this.props.mode;
     let code = this.props.code;
-      
     let lobbyInfo = null;
     let lobbyPlayers = null;
+
     if (mode === 'wait-friends' || mode === 'wait-online') {
       lobbyInfo = <LobbyInfo/>; 
-      lobbyPlayers = <LobbyPlayers  players={this.props.players}/>
-    }
+      lobbyPlayers = <LobbyPlayers  players={this.props.players}/>;
+    } 
 
+    
     return (
-      <div className='lobby'>
-        {lobbyInfo}
-        <Invite code={code} mode={mode} /><br/>
-        {this.renderButtons(mode, !code)}
-        {lobbyPlayers}
-      </div>
+      <CenterWrapper>
+        <Container>
+          {lobbyInfo}
+        </Container>
+        <Container right>
+          <Invite code={code} mode={mode} />
+        </Container>
+        <Container>
+          {this.renderButtons(mode, !code)}
+        </Container>
+        <CustomContainer right>
+          {lobbyPlayers}
+        </CustomContainer>
+      </CenterWrapper>
     ) 
   }
 }

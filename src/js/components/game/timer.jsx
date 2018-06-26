@@ -1,4 +1,16 @@
 import React, { Component } from 'react';
+import styled from 'styled-components';
+import { palette } from '../../styled-components';
+
+let StyledTimer = styled.p`
+  color: ${palette.PINK};
+  font-family: 'Anton', sans-serif;
+  font-size: 150px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+`;
 
 export default class Timer extends Component {
   constructor() {
@@ -28,7 +40,7 @@ export default class Timer extends Component {
     if (!this.state.seconds) return null;
 
     return(
-      <p className='timer'>{this.state.seconds}</p> 
+      <StyledTimer>{this.state.seconds}</StyledTimer> 
     )
   }
 }
