@@ -5,6 +5,7 @@ import { backgroundProps } from '../../styled-components/props-receivers';
 let Winner = styled.div`
   width: 200px;
   height: 200px;
+  z-index: 999;
   ${backgroundProps} 
 `
 

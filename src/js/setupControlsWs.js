@@ -26,7 +26,7 @@ function setup(code) {
         this.setState({ mode: 'play' });
         break;
       case 'START_SCREEN':
-        this.setState({ mode: 'start' });
+        this.setState({ mode: 'start', isWinner: false });
         ws.close();
         break;
       case 'ERR':

@@ -28,7 +28,7 @@ export default class Controls extends Component {
     this.state = {
       colorIndex: null,
       mode: 'start', //wait, play, game over 
-      isWinner: true 
+      isWinner: false 
     }
 
 
