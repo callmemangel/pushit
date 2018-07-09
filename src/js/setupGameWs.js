@@ -51,6 +51,9 @@ function setupWebSocket(code, gameMode) {
         case 'PLAY_AGAIN':
           window.ee.emit('GAME_START');
           break;
+        case 'WANT_AGAIN':
+          window.ee.emit('WANT_AGAIN');
+          break;
         case 'ADD_PLAYER':
           let players = this.state.players;
           players[msg.player.id] = msg.player;

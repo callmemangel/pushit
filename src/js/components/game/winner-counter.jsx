@@ -21,8 +21,10 @@ export default class WinnerCounter extends Component {
   } 
   
   componentDidMount() {
-    window.ee.on('EVENT', () => {
-      this.setState({ count: ++count }); 
+    window.ee.on('WANT_AGAIN', () => {
+      this.setState((prevState) => ({
+        count: ++prevState.count 
+      })); 
     });
   }
 

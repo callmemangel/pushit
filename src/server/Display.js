@@ -24,6 +24,10 @@ function Display(ws, game) {
     this.ws.sendSafe(JSON.stringify({ type: 'GOT_WINNER', colorIndex: colorIndex }));
   }
 
+  this.sendAgainSignal = function() {
+    this.ws.sendSafe(JSON.stringify({ type: 'WANT_AGAIN' }));
+  }
+
   this.close = function() {
     this.ws.sendSafe(JSON.stringify({ type: 'GAME_DELETE' }));
   }

@@ -33,6 +33,7 @@ function PlayerMaster(player) {
         break;
       case 'PLAY_AGAIN':
         this.player.wantAgain = true;
+        this.player.game.addWantAgainPlayer();
         break;
       }
     });

@@ -35,6 +35,12 @@ function Game(code, mode, type, games) {
     this.checkGameOver();
   }
 
+  this.addWantAgainPlayer = function() {
+    this.displays.forEach(display => {
+      display.sendAgainSignal(); 
+    });
+  }
+
   this.setPlayerKilled = function(player) {
     let id = player.id;
     if (id === null) return;
