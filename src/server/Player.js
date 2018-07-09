@@ -61,21 +61,26 @@ function Player(ws, game, customColor) {
     switch(vect) {
     case 'up': 
       this.y -= num;
+      this.game.coords[this.id * 2 + 1] -= num;
       break;
     case 'right': 
       this.x += num;
+      this.game.coords[this.id * 2] += num;
       break;
     case 'down': 
       this.y += num; 
+      this.game.coords[this.id * 2 + 1] += num;
       break;
     case 'left': 
       this.x -= num; 
+      this.game.coords[this.id * 2] -= num;
       break;
     }
 
     let players = this.checkCollision();
     this.setCollision(vect, players);
     this.game.sendCoords();
+
 
     if(this.checkDeath()) {
       this.setDeath();

@@ -8,8 +8,6 @@ import Lobby from './components/game/lobby.jsx';
 import Field from './components/game/field.jsx';
 import WinnerScreen from './components/game/winner-screen.jsx';
 
-
-import '../less/reset.less';
 window.ee = new EventEmitter();
 
 class Game extends Component {
@@ -27,15 +25,19 @@ class Game extends Component {
   }
 
   setCoords(coords) {
-    let players = this.state.players;
-    coords = coords.split('.');
+    coords = coords.split(',');
 
-    for (let i = 0; i < players.length; i++) {
-      players[i].x = coords[i * 2];
-      players[i].y = coords[i * 2 + 1];
-    }
+    this.setState((prevState) => {
+      let players = prevState.players;
 
-    this.setState({ players: players });
+      for (let i = 0; i < players.length; i++) {
+        players[i].x = coords[i * 2];
+        players[i].y = coords[i * 2 + 1];
+      }
+      return ({
+        players: players 
+      })
+    });
   };
 
   componentDidMount() {

@@ -23,7 +23,7 @@ var LobbyPlayers = props => {
   return (
     <Players>
       {players} 
-      <Title>Waiting for players</Title>
+      <Title>Waiting for players (2 min)</Title>
     </Players>
   )
 }

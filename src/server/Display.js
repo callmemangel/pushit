@@ -41,7 +41,7 @@ function Display(ws, game) {
   }
 
   this.sendCoords = function(coords) {
-    this.ws.sendSafe(JSON.stringify({ type: 'C', coords: coords.join('.')}));
+    this.ws.sendSafe(JSON.stringify({ type: 'C', coords: coords.toString()}));
   }
 
   this.sendPlayer = function(player) {

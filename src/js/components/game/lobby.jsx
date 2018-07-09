@@ -18,7 +18,7 @@ const CustomContainer = Container.extend`
   height: 40%;
 `
 
-function renderButtons (pageMode, isActive) {
+function renderButtons (pageMode, isActive, playersLen) {
   let buttons = [];
   if (pageMode === 'start') {
     buttons.push(
@@ -40,7 +40,7 @@ function renderButtons (pageMode, isActive) {
     buttons.push(
       <Button 
         red bold fontSize='80px'
-        disabled={isActive} 
+        disabled={isActive || playersLen < 2} 
         onClick={this.handleStartClick}
         key={4}
       >Start</Button>
@@ -89,6 +89,7 @@ export default class Lobby extends Component {
   render() {
     let mode = this.props.mode;
     let code = this.props.code;
+    let players = this.props.players;
     let lobbyInfo = null;
     let lobbyPlayers = null;
 
@@ -107,7 +108,7 @@ export default class Lobby extends Component {
           <Invite code={code} mode={mode} />
         </Container>
         <Container>
-          {this.renderButtons(mode, !code)}
+          {this.renderButtons(mode, !code, players.length)}
         </Container>
         <CustomContainer right>
           {lobbyPlayers}

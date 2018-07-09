@@ -7,6 +7,7 @@ const PlayerDiv = styled.div`
   position: absolute;
   width: 80px;
   height: 80px;
+  z-index: 999;
   ${backgroundProps};
 `;
 

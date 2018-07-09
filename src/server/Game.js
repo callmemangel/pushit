@@ -10,14 +10,15 @@ function Game(code, mode, type, games) {
   this.fieldW = 870;
   this.fieldH = 640;
   this.players = [];
+  this.coords = [];
   this.displays = [];
   this.games = games;
 
   this.sendCoords = function() {
-    let coords = this.getAllCoords();
-    console.log(coords);
+    //let coords = this.getAllCoords();
+    console.log(this.coords);
     this.displays.forEach(display => {
-      display.sendCoords(coords);
+      display.sendCoords(this.coords);
     });
   }
   
@@ -25,7 +26,10 @@ function Game(code, mode, type, games) {
     let id = player.id;
     if (id === null) return;
 
-    delete this.players[id]; 
+    delete this.players[id];
+    delete this.coords[id * 2]; 
+    delete this.coords[id * 2 + 1]; 
+
     this.freePlayerSpaces++;
 
     this.displays.forEach(display => {
@@ -44,6 +48,9 @@ function Game(code, mode, type, games) {
   this.setPlayerKilled = function(player) {
     let id = player.id;
     if (id === null) return;
+
+    this.coords[id * 2] = player.x;
+    this.coords[id * 2 + 1] = player.y;
     
     this.sendCoords();
 
@@ -128,6 +135,8 @@ function Game(code, mode, type, games) {
     for (let i = 0; i < 4; i++) {
       if (!this.players[i]) {
         this.players[i] = player;
+        this.coords[i * 2] = player.x;
+        this.coords[i * 2 + 1] = player.y;
         player.id = i;
         this.freePlayerSpaces--;
         return i;
@@ -174,6 +183,9 @@ function Game(code, mode, type, games) {
       if (!player) return;
 
       player.setInitialCoords();
+      this.coords[player.id * 2] = player.x;
+      this.coords[player.id * 2 + 1] = player.y;
+
       player.isKilled = false;
       player.startGame(); 
     });
