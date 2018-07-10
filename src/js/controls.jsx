@@ -13,6 +13,8 @@ import WaitScreen from './components/controls/wait-screen.jsx';
 
 import setupWebSocket from './setupControlsWs.js';
 
+import '../less/reset.less';
+
 import { CenterWrapper } from './styled-components';
 
 const Div = styled.div`

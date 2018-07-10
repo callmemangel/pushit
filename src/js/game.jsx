@@ -8,6 +8,8 @@ import Lobby from './components/game/lobby.jsx';
 import Field from './components/game/field.jsx';
 import WinnerScreen from './components/game/winner-screen.jsx';
 
+import '../less/reset.less';
+
 window.ee = new EventEmitter();
 
 class Game extends Component {
@@ -82,6 +84,7 @@ class Game extends Component {
   }
 
   render() {
+    let currComponent;
     if (this.state.mode == 'play') {
       return <Field players={this.state.players} /> 
     } else if (this.state.mode == 'winner') {

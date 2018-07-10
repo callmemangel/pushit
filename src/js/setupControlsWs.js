@@ -23,13 +23,14 @@ function setup(code) {
         this.setState({ isWinner: true, mode: 'game-over' });
         break;
       case 'START_GAME':
-        this.setState({ mode: 'play' });
+        this.setState({ mode: 'play', isWinner: false });
         break;
       case 'START_SCREEN':
         this.setState({ mode: 'start', isWinner: false });
         ws.close();
         break;
       case 'ERR':
+        this.setState({ isWinner: false })
         switch(data.code) {
         case 404:
           alert('game not found');

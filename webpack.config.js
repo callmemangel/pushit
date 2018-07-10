@@ -16,7 +16,7 @@ module.exports = {
   },
 
   plugins: [
-    new ExtractTextPlugin('[name].css'),
+    new ExtractTextPlugin('reset.css'),
     new webpack.DefinePlugin({
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV) 
     }),
@@ -52,6 +52,12 @@ module.exports = {
         use: [
           'babel-loader'
         ]
+      },
+      {
+        test: /\.less$/,
+        use: ExtractTextPlugin.extract({
+          use: ['css-loader', 'less-loader']
+        })
       },
     ]
   }
