@@ -1,11 +1,11 @@
 const express = require('express');
+const app = express(); 
 const path = require('path');
-const ws = require('ws'); 0
+const ws = require('express-ws')(app);
 var url = require('url');
 
-const app = express(); 
-const playerMasterWs = new ws.Server({ port: 3002 });
-const gameMasterWs = new ws.Server({ port: 3001 });
+//const playerMasterWs = new ws.Server({ port: 3002 });
+//const gameMasterWs = new ws.Server({ port: 3001 });
 
 const PlayerMaster = require('./src/server/PlayerMaster.js');
 const GameMaster = require('./src/server/GameMaster.js');
@@ -14,7 +14,7 @@ const Game = require('./src/server/Game.js');
 const Player = require('./src/server/Player.js');
 const Display = require('./src/server/Display.js');
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 let games = [];
 
@@ -64,7 +64,7 @@ function getReqCode(req) {
   return query.code;
 }
 
-gameMasterWs.on('connection', (ws, req) => {
+app.ws('/display', (ws, req) => {
   let code = getReqCode(req);
   if (process.env.NODE_ENV === 'development') {
     console.log(`got connection to game display with code = ${code}`);
@@ -96,7 +96,7 @@ gameMasterWs.on('connection', (ws, req) => {
   gameMaster.configurate(ws);
 });
 
-playerMasterWs.on('connection', (ws, req) => {
+app.ws('/player', (ws, req) => {
   let code = getReqCode(req);
 
   console.log(`got connection to game players with code = ${code}`);
@@ -175,5 +175,6 @@ app.post('/play_online', (req, res) => {
 });
 
 app.listen(port);
+
 
 console.log(`Magic on port ${port}`);
