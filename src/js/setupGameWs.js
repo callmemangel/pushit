@@ -1,5 +1,5 @@
 function setupWebSocket(code, gameMode) {
-    let ws = new WebSocket('ws:192.168.0.65:3000/display?code=' + code + '&gameMode=' + gameMode); 
+    let ws = new WebSocket('wss:montecamo-pushed.herokuapp.com/display?code=' + code + '&gameMode=' + gameMode); 
     
     ws.onclose = function() {
       alert('client game socket closed');

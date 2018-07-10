@@ -1,5 +1,5 @@
 function setup(code) {
-  let ws = new WebSocket('ws:192.168.0.65:3000/player?code=' + code);
+  let ws = new WebSocket('wss:montecamo-pushed.herokuapp.com/player?code=' + code);
  
   ws.onopen = () => {
     this.setState({ mode: 'wait' }); 

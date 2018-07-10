@@ -4,9 +4,6 @@ const path = require('path');
 const ws = require('express-ws')(app);
 var url = require('url');
 
-//const playerMasterWs = new ws.Server({ port: 3002 });
-//const gameMasterWs = new ws.Server({ port: 3001 });
-
 const PlayerMaster = require('./src/server/PlayerMaster.js');
 const GameMaster = require('./src/server/GameMaster.js');
 const AutoGameMaster = require('./src/server/AutoGameMaster.js');
