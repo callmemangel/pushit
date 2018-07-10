@@ -53,18 +53,6 @@ module.exports = {
           'babel-loader'
         ]
       },
-      {
-        test: /\.less$/,
-        use: ExtractTextPlugin.extract({
-          use: ['css-loader', 'less-loader']
-        })
-      },
-      {
-        test: /\.(jpg|png)$/,
-        use: [
-          'file-loader' 
-        ]
-      }
     ]
   }
 }

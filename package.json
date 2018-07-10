@@ -4,7 +4,6 @@
   "description": "simple online push game",
   "main": "app.js",
   "scripts": {
-    "test": "webpack --mode development -w --progress --colors --config webpack-test.config.js",
     "dev": "NODE_ENV=development webpack-dev-server --mode development --open",
     "build": "NODE_ENV=production webpack --mode production"
   },
