@@ -17,12 +17,21 @@ Pushed is a simple online sumo game, where you should push all the players outsi
 $ git clone https://github.com/montecamo/pushit/
 $ cd pushit 
 ```
-2. Install project dependencies:
+
+2. Go to ./src/js/setupGameWs.js and ./src/js/setupControlsWs.js and change host variable
+```sh
+let host = '/* your computer local adress */:3000';
+```
+
+3. Install project dependencies:
 
 ```sh
 $ npm install
 ```
-Start the app:
+
+4. Make shure you are in the same local network with your smartphone
+
+5. Start the app:
 
 ```sh
 $ npm start
