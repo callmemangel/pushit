@@ -3,6 +3,8 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
+const srcDir = path.resolve(__dirname, 'src');
+
 module.exports = {
   entry: {
     game: './src/js/game.jsx',
@@ -13,6 +15,12 @@ module.exports = {
     filename: '[name].js',
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/'
+  },
+
+  resolve: {
+    alias: {
+      '@': srcDir,
+    }
   },
 
   plugins: [
