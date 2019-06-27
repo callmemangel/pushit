@@ -5,7 +5,7 @@ import EventEmitter from 'event-emitter';
 import styled from 'styled-components';
 
 import Invite from'./components/controls/invite.jsx';
-import Buttons from './components/controls/buttons.jsx';
+import Buttons from './components/controls/Buttons/index.jsx';
 import PlayInfo from './components/controls/play-info.jsx';
 import GameOver from './components/controls/game-over.jsx';
 import StartScreen from './components/controls/start-screen.jsx';
@@ -14,6 +14,7 @@ import WaitScreen from './components/controls/wait-screen.jsx';
 import setupWebSocket from './setupControlsWs.js';
 
 import '../less/reset.less';
+import '../less/style.less';
 
 import { CenterWrapper } from './styled-components';
 
@@ -29,7 +30,7 @@ export default class Controls extends Component {
     
     this.state = {
       colorIndex: null,
-      mode: 'start', //wait, play, game over 
+      mode: 'play', //wait, play, game over 
       isWinner: false 
     }
 

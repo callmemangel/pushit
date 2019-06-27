@@ -9,6 +9,7 @@ import Field from './components/game/field.jsx';
 import WinnerScreen from './components/game/winner-screen.jsx';
 
 import '../less/reset.less';
+import '../less/style.less';
 
 window.ee = new EventEmitter();
 
