@@ -16,11 +16,11 @@ export const Button = styled.button`
 
   width: ${props => props.large
     ? '100%'
-    : '100px'
+    : '45%'
   }
   height: ${props => props.large
     ? '100%'
-    : '50px'
+    : '80%'
   }
   ${backgroundProps}; 
 `;

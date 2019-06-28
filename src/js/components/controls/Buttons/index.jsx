@@ -22,19 +22,33 @@ var ControlButtons = ({ colorIndex }) => {
   return (
     <S.Wrapper>
       <S.Container>
-        {BUTTON_IDS.map(id => (
+        <S.Row>
           <Button 
-            id={id}
-            key={id}
+            id="up"
             background={color}
             onClickStart={onClickStart}
             onClickEnd={onClickEnd}
-            style={{
-              marginRight: 5,
-              marginLeft: 5,
-            }}
           />
-        ))}
+        </S.Row>
+        <S.Row>
+          {['right', 'left'].map(id => (
+            <Button 
+              id={id}
+              key={id}
+              background={color}
+              onClickStart={onClickStart}
+              onClickEnd={onClickEnd}
+            />
+          ))}
+        </S.Row>
+        <S.Row>
+          <Button 
+            id="down"
+            background={color}
+            onClickStart={onClickStart}
+            onClickEnd={onClickEnd}
+          />
+        </S.Row>
       </S.Container>
       <S.Container>
         <Button
