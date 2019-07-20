@@ -5,7 +5,7 @@ export const Input = styled.input`
   height: 100%;
   width: 30%;
 
-  font-size: 96px;
+  font-size: ${props => props.theme.fontStandard};
 
   background: ${props => props.theme.sub};
   color: ${props => props.theme.main};

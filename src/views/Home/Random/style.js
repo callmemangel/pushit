@@ -5,6 +5,6 @@ import RandomSvg from '@/assets/shuffle.svg';
 
 export const RandomIcon = styled(RandomSvg)`
   width: 117px;
-  height: 75px;
+  height: 60%;
   fill: ${props => props.theme.dark};
 `;

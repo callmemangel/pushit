@@ -2,12 +2,14 @@
 import styled from 'styled-components';
 
 export const Wrapper = styled.div`
-  height: 100%;
-  width: 100%;
-
   display: flex;
   justify-content: center;
   align-items: center;
+
+  height: 100%;
+  width: 100%;
+
+  background: ${props => props.theme.main};
 `;
 
 export const Container = styled.div`
@@ -15,6 +17,7 @@ export const Container = styled.div`
   justify-content: space-evenly;
   align-items: center;
 
-  height: 128px;
-  width: 100%;
+  height: 80px;
+  width: 72%;
+  min-width: 870px;
 `;

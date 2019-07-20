@@ -13,6 +13,8 @@ const theme = {
   active: '#FF7E57',
   pale: '#87806D',
   dark: '#3C3642',
+  fontBig: '108px',
+  fontStandard: '60px',
 };
 
 render((
