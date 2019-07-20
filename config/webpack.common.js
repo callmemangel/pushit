@@ -16,7 +16,7 @@ let config = {
     alias: {
       '@': srcDir,
     },
-    extensions: ['.js', '.jsx', '.scss'],
+    extensions: ['.js', '.jsx', '.css'],
   },
 
   output: {
@@ -41,25 +41,14 @@ let config = {
         use: ['babel-loader'],
       },
       {
-        test: /\.scss$/,
+        test: /\.css$/,
         use: ExtractTextPlugin.extract({
           use: [
             {
               loader: 'css-loader',
               options: {
                 sourceMap: true,
-                modules: true,
                 localIdentName: '[local]___[hash:base64:5]',
-              },
-            },
-            {
-              loader: 'sass-loader',
-              options: {
-                data: `
-                  @import "colors";
-                  @import "variables";
-                `,
-                includePaths: ['src/styles'],
               },
             },
           ],

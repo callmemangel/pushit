@@ -1,3 +1,4 @@
+
 import React, { Component } from 'react';
 import { RightLabel, InviteWrapper, InviteInput, Label } from '../../styled-components';
 

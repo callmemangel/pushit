@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/callmemangel/pushit#readme",
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.19.0",
     "event-emitter": "^0.3.5",
     "express": "^4.16.3",
     "path": "^0.12.7",
@@ -28,6 +28,7 @@
     "ws": "^5.2.0"
   },
   "devDependencies": {
+    "@svgr/webpack": "^4.3.2",
     "babel-cli": "^6.26.0",
     "babel-loader": "^7.1.4",
     "babel-plugin-styled-components": "^1.5.1",
@@ -37,14 +38,18 @@
     "extract-text-webpack-plugin": "^4.0.0-beta.0",
     "file-loader": "^1.1.11",
     "html-loader": "^0.5.5",
+    "html-webpack-plugin": "^3.2.0",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
     "mocha": "^5.2.0",
+    "node-sass": "^4.12.0",
+    "sass-loader": "^7.1.0",
     "sinon": "^6.0.0",
     "uglifyjs-webpack-plugin": "^1.2.7",
-    "webpack": "^4.10.2",
+    "webpack": "^4.36.1",
     "webpack-cli": "^3.0.1",
-    "webpack-dev-server": "^3.1.4",
+    "webpack-dev-server": "^3.7.2",
+    "webpack-merge": "^4.2.1",
     "webpack-shell-plugin": "^0.5.0"
   }
 }
