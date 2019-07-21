@@ -15,6 +15,7 @@ const theme = {
   active: '#FF7E57',
   pale: '#87806D',
   dark: '#3C3642',
+  sunny: '#FDE17E',
   fontBig: '108px',
   fontStandart: '60px',
 };

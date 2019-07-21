@@ -9,4 +9,6 @@ export const Button = styled.button`
   border: 0;
 
   color: ${props => props.theme[props.color]};
+
+  outline: none;
 `;
