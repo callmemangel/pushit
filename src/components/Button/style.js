@@ -2,7 +2,7 @@
 import styled from 'styled-components';
 
 export const Button = styled.button`
-  font-size: ${props => props.theme.fontStandard};
+  font-size: ${props => props.theme.fontStandart};
   background: none;
 
   padding: 0;

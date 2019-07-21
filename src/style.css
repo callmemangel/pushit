@@ -1,5 +1,5 @@
 
-html, body, #root {
+html, body, :global(#root), .root {
   padding: 0;
   margin: 0;
   width: 100%;

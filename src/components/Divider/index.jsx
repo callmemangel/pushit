@@ -17,7 +17,7 @@ Divider.propTypes = {
 
 Divider.defaultProps = {
   color: 'active',
-  size: 'standard',
+  size: 'standart',
 }
 
 export default Divider;

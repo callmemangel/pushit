@@ -1,11 +1,13 @@
 
 import React from 'react';
+import { Router } from '@reach/router';
 import { render } from 'react-dom';
 import { ThemeProvider } from 'styled-components';
 
-import './style';
+import style from './style';
 
-import App from '@/views/Home';
+import Home from '@/views/Home';
+import Room from '@/views/Room';
 
 const theme = {
   main: '#F2F1EF',
@@ -14,11 +16,19 @@ const theme = {
   pale: '#87806D',
   dark: '#3C3642',
   fontBig: '108px',
-  fontStandard: '60px',
+  fontStandart: '60px',
 };
+
+console.warn('style', style);
+const RouterComponent = () => (
+  <Router className={style.root}>
+    <Home path="/" />
+    <Room path="/:id" />
+  </Router>
+);
 
 render((
   <ThemeProvider theme={theme}>
-    <App />
+    <RouterComponent />
   </ThemeProvider>
 ), document.getElementById('root'));
