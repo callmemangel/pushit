@@ -1,5 +1,5 @@
 function setup(code) {
-  let ws = new WebSocket('ws:pushed.wiretty.club:8081code=' + code);
+  let ws = new WebSocket('wss:pushed.wiretty.club:8443?code=' + code);
  
   ws.onopen = () => {
     this.setState({ mode: 'wait' }); 
