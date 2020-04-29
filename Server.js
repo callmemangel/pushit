@@ -4,8 +4,8 @@ const ws = require('ws'); 0
 var url = require('url');
 
 const app = express(); 
-const playerMasterWs = new ws.Server({ port: 3002 });
-const gameMasterWs = new ws.Server({ port: 3001 });
+const gameMasterWs = new ws.Server({ port: 8080 });
+const playerMasterWs = new ws.Server({ port: 8081 });
 
 const PlayerMaster = require('./src/server/PlayerMaster.js');
 const GameMaster = require('./src/server/GameMaster.js');
@@ -14,7 +14,7 @@ const Game = require('./src/server/Game.js');
 const Player = require('./src/server/Player.js');
 const Display = require('./src/server/Display.js');
 
-const port = 3000;
+const port = 80;
 
 let games = [];
 

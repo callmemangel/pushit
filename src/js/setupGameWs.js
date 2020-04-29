@@ -1,5 +1,5 @@
 function setupWebSocket(code, gameMode) {
-    let ws = new WebSocket('ws:192.168.0.65:3001?code=' + code + '&gameMode=' + gameMode); 
+    let ws = new WebSocket('ws:pushed.wiretty.club:8080?code=' + code + '&gameMode=' + gameMode); 
     
     ws.onclose = function() {
       alert('client game socket closed');
