@@ -1,5 +1,5 @@
 function setupWebSocket(code, gameMode) {
-    let ws = new WebSocket('wss:pushed.viretty.club/socket?code=' + code + '&gameMode=' + gameMode); 
+    let ws = new WebSocket('wss:pushed.wiretty.club/socket?code=' + code + '&gameMode=' + gameMode); 
     
     ws.onclose = function() {
       alert('client game socket closed');

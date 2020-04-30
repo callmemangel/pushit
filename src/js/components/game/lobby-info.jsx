@@ -12,7 +12,7 @@ const Info = styled.p`
 
 var LobbyInfo = props => (
   <Info>
-    open www.pushed.com/play<br/>
+    open pushed.wiretty.club/play<br/>
     on your smartphone and<br/>
     insert code there<br/>
   </Info>
