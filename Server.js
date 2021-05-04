@@ -5,11 +5,13 @@ const SocketIO = require("socket.io");
 const app = express();
 
 const gameIo = SocketIO(8080, {
+  path: '/game',
   cors: {
     origin: '*',
   }
 });
-const playerIo = SocketIO(8081, {
+const controlsIo = SocketIO(8081, {
+  path: '/controls',
   cors: {
     origin: '*',
   }
@@ -107,7 +109,7 @@ gameIo.on("connection", (socket) => {
   gameMaster.configurate(socket);
 });
 
-playerIo.on("connection", (socket) => {
+controlsIo.on("connection", (socket) => {
   let code = getReqCode(socket);
 
   // console.log(`got connection to game players with code = ${code}`);

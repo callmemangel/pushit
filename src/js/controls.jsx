@@ -87,7 +87,7 @@ export default class Controls extends Component {
     return (
       <Div>
         {mode === 'start' && <StartScreen/>}
-        {mode === 'connection' || mode === 'wait' ?
+        {mode === 'connecting' || mode === 'wait' ?
              <WaitScreen mode={this.state.mode}/> : 
              null
         }

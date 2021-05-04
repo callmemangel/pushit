@@ -1,7 +1,12 @@
 import io from "socket.io-client";
 
 function setup(code) {
-  const socket = io("wss://pushed.montecamo.dev/controls?code=" + code);
+  const socket = io("wss://pushed.montecamo.dev", {
+    path: '/controls',
+    query: {
+      code,
+    }
+  });
 
   socket.onAny(console.warn);
   socket.on("SET_COLOR", (color) => {
