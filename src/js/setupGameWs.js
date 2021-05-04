@@ -1,7 +1,6 @@
 import io from "socket.io-client";
 
 function setupWebSocket(code, gameMode) {
-  // let ws = new WebSocket('wss:pushed.wiretty.club/socket?code=' + code + '&gameMode=' + gameMode);
   const socket = io("wss://pushed.montecamo.dev/game?code=" + code + "&gameMode=" + gameMode);
 
   socket.onAny(console.warn);
