@@ -1,81 +1,74 @@
+import io from "socket.io-client";
+
 function setupWebSocket(code, gameMode) {
-    let ws = new WebSocket('wss:pushed.wiretty.club/socket?code=' + code + '&gameMode=' + gameMode); 
-    
-    ws.onclose = function() {
-      alert('client game socket closed');
-      //send err
+  // let ws = new WebSocket('wss:pushed.wiretty.club/socket?code=' + code + '&gameMode=' + gameMode);
+  const socket = io("wss://pushed.montecamo.dev/game?code=" + code + "&gameMode=" + gameMode);
+
+  socket.onAny(console.warn);
+
+  socket.on("test", () => {
+    alert("test message from server");
+  });
+
+  socket.on('ERR', (code) => {
+    switch (code) {
+      case '404':
+        //do err
+        socket.disconnect();
+        break;
     }
+  });
+  socket.on('405', () => {
+    socket.close();
+  });
+  socket.on('C', (coords) => {
+    this.setCoords(coords);
+  });
+  socket.on("GAME_READY", () => {
+    window.ee.emit("GAME_READY");
+  });
+  socket.on('GOT_WINNER', (color) => {
+    this.setState({ mode: "winner", winnerColorIndex: color });
+  });
+  socket.on('NEW_GAME', () => {
+    this.setState({ mode: "start" });
+  });
+  socket.on('GAME_DELETE', () => {
+    this.setState({ mode: "start" });
+    socket.disconnect();
+  });
+  socket.on('PLAY_AGAIN', () => {
+    window.ee.emit("GAME_START");
+  });
+  socket.on('WANT_AGAIN', () => {
+    window.ee.emit("WANT_AGAIN");
+  });
+  socket.on('ADD_PLAYER', (player) => {
+    console.warn('add player', player);
+    let players = this.state.players;
+    players[player.id] = player;
+    this.setState({ players: players });
+  });
+  socket.on('DELETE_PLAYER', (id) => {
+    let plrss = this.state.players;
 
-    ws.onopen = function() {
-    }
+    delete plrss[id];
+    this.setState({ players: plrss });
+    console.log("player deleted " + id);
+  });
+  socket.on('KILL_PLAYER', (id) => {
+    let plrs = this.state.players;
 
-    ws.onerror = function(e) {
-      alert('error ' + e.code);
-    }
+    this.setState({ players: plrs });
+    console.log("player killed " + id);
+  });
 
-    ws.onmessage = event => {
-      let msg = JSON.parse(event.data);
+  socket.on('disconnect', () => {
+    console.warn("client game socket closed");
 
-      switch (msg.type) {
-        case 'test': 
-          alert('test message from server');
-          break;
-        case 'ERR':
-          switch(msg.code) {
-          case 404:
-            //do err 
-            ws.close();
-            break;
-          }
-          case 405:
-            //do err 
-            ws.close();
-            break;
-          break;
-        case 'C':
-          this.setCoords(msg.coords);
-          break;
-        case 'GAME_READY':
-          window.ee.emit('GAME_READY');
-          break;
-        case 'GOT_WINNER':
-          this.setState({ mode: 'winner', winnerColorIndex: msg.colorIndex });
-          break;
-        case 'NEW_GAME':
-          this.setState({ mode: 'start' });
-          break;
-        case 'GAME_DELETE':
-          this.setState({ mode: 'start' });
-          ws.close();
-          break;
-        case 'PLAY_AGAIN':
-          window.ee.emit('GAME_START');
-          break;
-        case 'WANT_AGAIN':
-          window.ee.emit('WANT_AGAIN');
-          break;
-        case 'ADD_PLAYER':
-          let players = this.state.players;
-          players[msg.player.id] = msg.player;
-          this.setState({ players: players });
-          break;
-        case 'DELETE_PLAYER':
-          let plrss = this.state.players;
+  })
 
-          delete plrss[msg.id];
-          this.setState({ players: plrss });
-          console.log('player deleted ' + msg.id);
-          break;
-        case 'KILL_PLAYER':
-          let plrs = this.state.players;
-
-          this.setState({ players: plrs });
-          console.log('player killed ' + msg.id);
- 
-          break;
-      }
-    }
-  return ws;
-}  
+  return socket;
+}
 
 export default setupWebSocket;

@@ -1,59 +1,50 @@
+import io from "socket.io-client";
+
 function setup(code) {
-  let ws = new WebSocket('wss:pushed.wiretty.club:8443/socket?code=' + code);
- 
-  ws.onopen = () => {
-    this.setState({ mode: 'wait' }); 
-  }
+  const socket = io("wss://pushed.montecamo.dev/controls?code=" + code);
 
-  ws.onclose = () => {
-    alert('websocket closed');
-  }
+  socket.onAny(console.warn);
+  socket.on("SET_COLOR", (color) => {
+    this.setState({ colorIndex: color });
+  });
+  socket.on("GAME_OVER", () => {
+    this.setState({ mode: "game-over" });
+  });
+  socket.on("WINNER", () => {
+    this.setState({ isWinner: true, mode: "game-over" });
+  });
+  socket.on("START_GAME", () => {
+    console.warn('start game')
+    this.setState({ mode: "play", isWinner: false });
+  });
+  socket.on("START_SCREEN", () => {
+    this.setState({ mode: "start", isWinner: false });
 
-  ws.onmessage = msg => {
-    let data = JSON.parse(msg.data); 
-
-    switch(data.type) {
-      case 'SET_COLOR':
-        this.setState({ colorIndex: data.colorIndex });
+    socket.disconnect();
+  });
+  socket.on("ERR", (code) => {
+    this.setState({ isWinner: false });
+    switch (code) {
+      case "404":
+        console.warn("game not found");
+        //game not found
         break;
-      case 'GAME_OVER':
-        this.setState({ mode: 'game-over' });
-        break;
-      case 'WINNER':
-        this.setState({ isWinner: true, mode: 'game-over' });
-        break;
-      case 'START_GAME':
-        this.setState({ mode: 'play', isWinner: false });
-        break;
-      case 'START_SCREEN':
-        this.setState({ mode: 'start', isWinner: false });
-        ws.close();
-        break;
-      case 'ERR':
-        this.setState({ isWinner: false })
-        switch(data.code) {
-        case 404:
-          alert('game not found');
-          //game not found
-          break;
-        case 405:
-          alert('game is full');
-          //game is full
-          break;
-        }
-       break;
-
-      default:
-        alert('not such case in client socket switch');
+      case "405":
+        console.warn("game is full");
+        //game is full
         break;
     }
-  }
-  
-  ws.onerror = function(e) {
-    alert('client socket err ' + e.code); 
-  }
+  });
 
-  return ws;
+  socket.on("connect", () => {
+    this.setState({ mode: "wait" });
+  });
+
+  socket.on("disconnect", () => {
+    console.warn("websocket closed");
+  });
+
+  return socket;
 }
 
 export default setup;

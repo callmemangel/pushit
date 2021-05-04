@@ -51,7 +51,7 @@ class Game extends Component {
       axios.post('/generate', { mode: gameMode })
         .then(res => {
           let code = res.data;
-          this.ws = this.setupWebSocket(code, gameMode);
+          this.socket = this.setupWebSocket(code, gameMode);
           this.setState({ code: code });
         })
        
@@ -62,23 +62,23 @@ class Game extends Component {
       axios.post('/generate', { mode: gameMode })
         .then(res => {
           let code = res.data;
-          this.ws = this.setupWebSocket(code, gameMode);
+          this.socket = this.setupWebSocket(code, gameMode);
           this.setState({ code: code });
         })
     });
 
     window.ee.on('GAME_START', () => {
-      this.ws.send(JSON.stringify({type: 'GAME_START'}));
+      this.socket.emit('GAME_START');
       this.setState({ mode: 'play' });
     });
 
     window.ee.on('PLAY_AGAIN', () => {
-      this.ws.send(JSON.stringify({ type: 'PLAY_AGAIN' }));
+      this.socket.emit('PLAY_AGAIN');
       this.setState({ mode: 'play' });
     });
 
     window.ee.on('NEW_GAME', () => {
-      this.ws.send(JSON.stringify({ type: 'DISCONNECT' }));
+      this.socket.emit('DISCONNECT');
       this.setState({ mode: 'start', players: [], code: '' });
     });
   }

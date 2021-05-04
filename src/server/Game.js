@@ -16,7 +16,7 @@ function Game(code, mode, type, games) {
 
   this.sendCoords = function() {
     //let coords = this.getAllCoords();
-    console.log(this.coords);
+    // console.log(this.coords);
     this.displays.forEach(display => {
       display.sendCoords(this.coords);
     });
@@ -178,7 +178,7 @@ function Game(code, mode, type, games) {
   }
 
   this.startGame = function() {
-    console.log('Game starting...', this.players.length);
+    // console.log('Game starting...', this.players.length);
     this.players.forEach(player => {
       if (!player) return;
 
@@ -193,8 +193,8 @@ function Game(code, mode, type, games) {
   }
 
   this.playAgain = function() {
-    console.log('PLAY_AGAIN');
-    console.log('clearing idle');
+    // console.log('PLAY_AGAIN');
+    // console.log('clearing idle');
     this.clearIdlePlayers();
 
     if (this.getPlayersNum() < 2) {
@@ -207,7 +207,7 @@ function Game(code, mode, type, games) {
 
   this.del = function() {
 
-    console.log('trying to deleting game...');
+    // console.log('trying to deleting game...');
 
     this.players.forEach(player => {
       if (!player) return;

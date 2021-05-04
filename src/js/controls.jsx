@@ -41,32 +41,32 @@ export default class Controls extends Component {
     window.ee.on('START_MOVE', (vector) => {
       switch(vector) {
       case 'up':
-        this.ws.send('1');
+        this.socket.emit('1');
         break;
       case 'right':
-        this.ws.send('2');
+        this.socket.emit('2');
         break;
       case 'down':
-        this.ws.send('3');
+        this.socket.emit('3');
         break;
       case 'left':
-        this.ws.send('4');
+        this.socket.emit('4');
         break;
       case 'push':
-        this.ws.send('P');
+        this.socket.emit('P');
       }
     });
 
     window.ee.on('MOVE_END', () => {
-      this.ws.send('E'); 
+      this.socket.emit('E'); 
     });
 
     window.ee.on('PLAY_AGAIN', () => {
-      this.ws.send('PLAY_AGAIN');
+      this.socket.emit('PLAY_AGAIN');
     });
 
     window.ee.on('STOP_GAME', () => {
-      this.ws.send('DISCONNECT');
+      this.socket.emit('DISCONNECT');
     });
 
     window.ee.on('CONNECT_START', code => {
@@ -76,7 +76,7 @@ export default class Controls extends Component {
             window.ee.emit('WRONG_CODE'); 
             return;
           }
-          this.ws = this.setupWebSocket(code);
+          this.socket = this.setupWebSocket(code);
           this.setState({ mode: 'connecting', code: '' });
         })
     })

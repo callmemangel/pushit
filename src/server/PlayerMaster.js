@@ -1,57 +1,37 @@
 function PlayerMaster(player) {
   this.player = player;
 
-  this.configurate = function(ws) {
-
-    ws.on('message', signal => {
-      console.log(signal); 
-      switch(signal) {
-      case '1':
-        this.player.startMove('up');
-        break;
-      case '2':
-        this.player.startMove('right');
-        break;
-      case '3':
-        this.player.startMove('down');
-        break;
-      case '4':
-        this.player.startMove('left');
-        break;
-
-      case 'E': 
-        this.player.stopMove();
-        break;
-
-      case 'P':
-        console.log('pushh');
-        this.player.push(20);
-        break;
-
-      case 'DISCONNECT':
-        this.player.delFromGame();
-        break;
-      case 'PLAY_AGAIN':
-        this.player.wantAgain = true;
-        this.player.game.addWantAgainPlayer();
-        break;
-      }
+  this.configurate = function (socket) {
+    socket.on("1", () => {
+      this.player.startMove("up");
     });
-
-    ws.on('error', event => {
-      console.log(event.code);
+    socket.on("2", () => {
+      this.player.startMove("right");
+    });
+    socket.on("3", () => {
+      this.player.startMove("down");
+    });
+    socket.on("4", () => {
+      this.player.startMove("left");
+    });
+    socket.on("E", () => {
+      this.player.stopMove();
+    });
+    socket.on("P", () => {
+      // console.log("pushh");
+      this.player.push(20);
+    });
+    socket.on("DISCONNECT", () => {
       this.player.delFromGame();
     });
-
-    ws.on('close', event => {
-      this.player.delFromGame(); 
+    socket.on("PLAY_AGAIN", () => {
+      this.player.wantAgain = true;
+      this.player.game.addWantAgainPlayer();
     });
-
-    ws.sendSafe = function(string) {
-      if (this.readyState == 2 || this.readyState == 3) return; 
-      this.send(string);
-    }
-  }
+    socket.on("disconnect", () => {
+      this.player.delFromGame();
+    });
+  };
 }
 
 module.exports = PlayerMaster;

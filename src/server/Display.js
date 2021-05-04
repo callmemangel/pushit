@@ -1,59 +1,53 @@
-function Display(ws, game) {
-  this.ws = ws;
+function Display(socket, game) {
+  this.socket = socket;
   this.game = game;
 
-  ws.on('close', () => {
-    console.log('DISPLAY CLOSED');
+  socket.on("disconnect", () => {
+    console.log("DISPLAY CLOSED");
   });
 
-  ws.sendSafe = function(string) {
-    if (this.readyState == 2 || this.readyState == 3) return; 
+  this.delFromGame = function () {
+    game.delDisplay(this);
+  };
 
-    this.send(string);
-  }
+  this.addToGame = function () {
+    this.game.addDisplay(this);
+  };
 
-  this.delFromGame = function() {
-    game.delDisplay(this); 
-  } 
-  
-  this.addToGame = function() {
-    this.game.addDisplay(this); 
-  }
+  this.renderWinner = function (colorIndex) {
+    this.socket.emit("GOT_WINNER", colorIndex);
+  };
 
-  this.renderWinner = function(colorIndex) {
-    this.ws.sendSafe(JSON.stringify({ type: 'GOT_WINNER', colorIndex: colorIndex }));
-  }
+  this.sendAgainSignal = function () {
+    this.socket.emit("WANT_AGAIN");
+  };
 
-  this.sendAgainSignal = function() {
-    this.ws.sendSafe(JSON.stringify({ type: 'WANT_AGAIN' }));
-  }
+  this.close = function () {
+    this.socket.emit("GAME_DELETE");
+  };
 
-  this.close = function() {
-    this.ws.sendSafe(JSON.stringify({ type: 'GAME_DELETE' }));
-  }
+  this.delPlayer = function (id) {
+    this.socket.emit("DELETE_PLAYER", id);
+  };
 
-  this.delPlayer = function(id) {
-    this.ws.sendSafe(JSON.stringify({ type: 'DELETE_PLAYER', id: id }));
-  }
+  this.killPlayer = function (id) {
+    this.socket.emit("KILL_PLAYER", id);
+  };
 
-  this.killPlayer = function(id) {
-    this.ws.sendSafe(JSON.stringify({ type: 'KILL_PLAYER', id: id }));
-  }
+  this.sendCoords = function (coords) {
+    this.socket.emit("C", coords.toString());
+  };
 
-  this.sendCoords = function(coords) {
-    this.ws.sendSafe(JSON.stringify({ type: 'C', coords: coords.toString()}));
-  }
-
-  this.sendPlayer = function(player) {
+  this.sendPlayer = function (player) {
     let obj = {
       x: player.x,
       y: player.y,
       colorIndex: player.colorIndex,
-      id: player.id
-    } 
-    console.log(obj);
-    this.ws.sendSafe(JSON.stringify({ type: 'ADD_PLAYER', player: obj}));
-  }
+      id: player.id,
+    };
+
+    this.socket.emit("ADD_PLAYER", obj);
+  };
 }
 
 module.exports = Display;
