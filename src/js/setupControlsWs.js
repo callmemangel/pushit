@@ -8,7 +8,6 @@ function setup(code) {
     }
   });
 
-  socket.onAny(console.warn);
   socket.on("SET_COLOR", (color) => {
     this.setState({ colorIndex: color });
   });

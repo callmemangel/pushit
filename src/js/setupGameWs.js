@@ -9,8 +9,6 @@ function setupWebSocket(code, gameMode) {
     },
   });
 
-  socket.onAny(console.warn);
-
   socket.on("test", () => {
     alert("test message from server");
   });
